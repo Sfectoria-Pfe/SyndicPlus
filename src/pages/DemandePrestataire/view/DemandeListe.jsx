@@ -34,7 +34,7 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 2535355,
+    telephone: 25353555,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     email: 'jean.dupont@example.com',
@@ -64,7 +64,7 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 285354325,
+    telephone: 28535425,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     email: 'bruce.wayne@example.com',

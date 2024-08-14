@@ -26,11 +26,11 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 251243525,
+    telephone: 25243525,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     email: randomEmail(),
-    payement: 'disponser',
+    payement: 'Disponser',
     photo: Pro1,
   },
   {
@@ -46,7 +46,7 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 1932345,
+    telephone: 19324345,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     email: randomEmail(),
@@ -56,7 +56,7 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 2875756,
+    telephone: 28757356,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     email: randomEmail(),
@@ -66,7 +66,7 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 235757,
+    telephone: 23575477,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     email: randomEmail(),

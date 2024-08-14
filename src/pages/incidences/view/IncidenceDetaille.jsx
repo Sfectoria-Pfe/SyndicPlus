@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import html2canvas from 'html2canvas';
 import { FaPrint } from 'react-icons/fa'; // Importer l'icône d'impression
@@ -39,9 +39,11 @@ function IncidenceDetaille() {
             <p className="font20">Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.</p> {/* Exemple de description */}
           </Detail>
         </DetailsWrapper>
-        <Button variant="primary" onClick={handleDownload} style={{ marginTop: '20px' }}>
-          <FaPrint style={{ marginRight: '8px' }} />
-        </Button>
+        <ButtonWrapper>
+          <Button variant="primary" onClick={handleDownload}>
+            <FaPrint />
+          </Button>
+        </ButtonWrapper>
       </Container>
     </Wrapper>
   );
@@ -74,6 +76,7 @@ const DetailsWrapper = styled.div`
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 60px;
 `;
 
 const Detail = styled.div`
@@ -83,6 +86,10 @@ const Detail = styled.div`
 const Label = styled.label`
   display: block;
   font-weight: bold;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 20px; /* Ajustez cette valeur pour obtenir l'espacement souhaité */
 `;
 
 

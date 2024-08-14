@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import { Button } from 'react-bootstrap'; 
+import { MdAddAPhoto } from "react-icons/md";
 
 function AddProprietaire() {
   return (
@@ -11,17 +12,37 @@ function AddProprietaire() {
         </HeaderInfo>
         <FormWrapper>
           <Form>
-            <label className="font13">Nom complete:</label>
-            <input type="text" id="nomcomplete" name="nomcomplete" className="font20" />
-            <label className="font13">Email:</label>
-            <input type="email" id="email" name="email" className="font20" />
-            <label className="font13">Mot de passe:</label>
-            <input type="password" id="password" name="password" className="font20" />
-            <label className="font13">Confirmer mot de passe:</label>
-            <input type="password" id="confirmpassword" name="confirmpassword" className="font20" />
+            <ImageSection>
+              <ImageWrapper>
+                <img
+                  alt=""
+                  style={{
+                    width: '130px',
+                    height: '130px',
+                    borderRadius: '20%',
+                    objectFit: 'cover',
+                    border: '1px solid #1F4B43',
+                    marginLeft: "10px"
+                  }}
+                />
+                <MdAddAPhoto className="photo-icon" />
+              </ImageWrapper>
+              <InputWrapper>
+                <label className="font13" style={{ fontFamily: "bold", marginLeft: "90px", marginTop: "40px" }}>Nom Complete:</label>
+                <input type="text" id="nomcomplet" name="nomcomplet" className="font20" style={{ marginLeft: "90px" }} />
+              </InputWrapper>
+            </ImageSection>
+            <InputWrapper>
+              <label className="font13">Email:</label>
+              <input type="email" id="email" name="email" className="font20" />
+              <label className="font13">Mot de passe:</label>
+              <input type="password" id="password" name="password" className="font20" />
+              <label className="font13">Confirmer mot de passe:</label>
+              <input type="password" id="confirmpassword" name="confirmpassword" className="font20" />
+            </InputWrapper>
             <SumbitWrapper>
-              <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor:"#1F4B43" }}>
-               Ajouter
+              <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }}>
+                Ajouter
               </Button>
             </SumbitWrapper>
           </Form>
@@ -83,5 +104,49 @@ const Form = styled.form`
 const SumbitWrapper = styled.div`
   display: flex;
   justify-content: center;
+`;
+const ImageSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-right: 20px; /* Espacement entre l'image et les champs de texte */
+
+ .photo-icon {
+    position: absolute;
+    top: 80%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    font-size: 80px; /* Ajustez la taille de l'icône si nécessaire */
+    color: #fff; /* Couleur de l'icône, ajustez si nécessaire */
+    background-color: rgba(0, 0, 0, 0.5); /* Optionnel: couleur de fond semi-transparente pour l'icône */
+    border-radius: 50%;
+    padding: 5px; /* Ajustez le padding pour que l'icône soit bien positionnée */
+  }
+`;
+
+const InputWrapper = styled.div`
+  margin-bottom: 30px;
+
+  input,
+  textarea {
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 1px solid #707070;
+    height: 30px;
+    margin-bottom: 20px; /* Espacement entre les champs */
+  }
+
+  textarea {
+    min-height: 100px;
+  }
 `;
 

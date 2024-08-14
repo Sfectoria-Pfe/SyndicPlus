@@ -30,18 +30,20 @@ export default function ProprietaireDetaille() {
               <label className="font20" style={{ fontFamily: 'bold', marginLeft: '90px', marginTop: '40px' }}>
                 Nom Complet:
               </label>
-              <p  style={{ marginLeft: '90px' }}>amir ben molehem</p> 
+              <p  style={{ marginLeft: '90px' }}>amira ben molehem</p> 
             </InputWrapper>
           </ImageSection>
           <InputWrapper>
             <label className="font20">Email:</label>
             <p >Amirabenmoleh52@gmail.com</p> 
             <label className="font20">Mot de passe:</label>
-            <p >mohamedSal520147</p> 
+            <p >amirabenmol4178</p> 
             <label className="font20">Numéro de l'étage:</label>
-            <p>4</p> 
+            <p>2</p> 
             <label className="font20">Numéro de l'appartement:</label>
-            <p >5</p> 
+            <p >3</p> 
+            <label className="font20">Statut:</label>
+            <p >Disponser</p> 
           </InputWrapper>
           {/* Décommentez cette section si vous utilisez un bouton */}
           {/* <SumbitWrapper>

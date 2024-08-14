@@ -51,7 +51,7 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 1946868,
+    telephone: 19468686,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     commentaire: 2, // Nombre d'étoiles
@@ -62,7 +62,7 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 285463856,
+    telephone: 28463856,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     commentaire: 4, // Nombre d'étoiles
@@ -73,7 +73,7 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    telephone: 2335235,
+    telephone: 23352358,
     joinDate: randomCreatedDate(),
     role: randomRole(),
     commentaire: 1, // Nombre d'étoiles

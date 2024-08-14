@@ -35,6 +35,7 @@ const initialRows = [
     joinDate: randomCreatedDate(),
     role: randomRole(),
     DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
+    Photo:"phot1.png",
   },
   {
     id: randomId(),
@@ -43,6 +44,7 @@ const initialRows = [
     joinDate: randomCreatedDate(),
     role: randomRole(),
     DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
+    Photo:"phot2.png",
   },
   {
     id: randomId(),
@@ -51,6 +53,7 @@ const initialRows = [
     joinDate: randomCreatedDate(),
     role: randomRole(),
     DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
+    Photo:"phot3.png",
   },
   {
     id: randomId(),
@@ -59,6 +62,7 @@ const initialRows = [
     joinDate: randomCreatedDate(),
     role: randomRole(),
     DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
+    Photo:"phot4.png",
   },
   {
     id: randomId(),
@@ -67,6 +71,7 @@ const initialRows = [
     joinDate: randomCreatedDate(),
     role: randomRole(),
     DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
+    Photo:"phot5.png",
   },
 ];
 
@@ -94,7 +99,7 @@ export default function IncidenceListe() {
   };
 
   const showDeleteToast = () => {
-    toast.success('Élément supprimé!');
+    toast.success('Incidente supprimé!');
   };
 
   const handleDeleteClick = (id) => () => {
@@ -127,7 +132,7 @@ export default function IncidenceListe() {
       editable: true,
     },
     {
-      field: 'role',
+      field: 'Photo',
       headerName: 'Photo',
       width: 220,
       editable: true,

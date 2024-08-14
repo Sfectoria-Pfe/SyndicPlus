@@ -42,6 +42,8 @@ function LocataireDetaille() {
               <p>4</p> 
               <label className="font20">Numéro de l'appartement:</label>
               <p >5</p> 
+              <label className="font20">Statut:</label>
+              <p >Payer</p>
             </InputWrapper>
             {/* Décommentez cette section si vous utilisez un bouton */}
             {/* <SumbitWrapper>
