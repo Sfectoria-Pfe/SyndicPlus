@@ -174,14 +174,14 @@ export const incidenceContent = [
         name: "assenceur",
         nbredeEtage: 2,
         descriptiondudegat: "l'assenceur est bloqué",
-        avatar: "https://www.bing.com/images/search?view=detailV2&ccid=ZVWgspK%2f&id=80F6738C67853B7B77D1EB0A2681E60026487C84&thid=OIP.ZVWgspK_P7OVA5CY2Ekb9AAAAA&mediaurl=https%3a%2f%2fwww.baticopro.com%2fmedia%2fpost%2fimage%2fresizedPostView%2ffotolia_97376353_xs_1_.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.6555a0b292bf3fb395039098d8491bf4%3frik%3dhHxIJgDmgSYK6w%26pid%3dImgRaw%26r%3d0&exph=283&expw=424&q=ascenseur+bloqu%c3%a9&simid=608024167176169565&FORM=IRPRST&ck=222C0E587623D52C03EBB50A0AB9ECAE&selectedIndex=10&itb=0",
+        avatar: "https://th.bing.com/th/id/OIP.8K6VApH1PmfiN3-YR-U3HwHaFj?rs=1&pid=ImgDetMain",
         status: "en attent",
     },
     {
         name: "lamp",
         nbredeEtage: 3,
         descriptiondudegat: "la lamp est cassé",
-        avatar: "https://www.bing.com/images/search?view=detailV2&ccid=NOYbv%2fc%2b&id=E0343B6FD381E2C6F1251447A3C8CA36AFC4D461&thid=OIP.NOYbv_c-CncMd-mCV5XrYAHaH0&mediaurl=https%3a%2f%2fthumbs.dreamstime.com%2fz%2flampe-cass%c3%a9e-15101003.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.34e61bbff73e0a770c77e9825795eb60%3frik%3dYdTErzbKyKNHFA%26pid%3dImgRaw%26r%3d0&exph=1690&expw=1600&q=lamp+cass%c3%a9&simid=608027835074545544&FORM=IRPRST&ck=816112E2C0E60C8BAEDB02182FC5C954&selectedIndex=2&itb=0",
+        avatar: "https://th.bing.com/th/id/OIP._WdZYGRtBR4rG2Tq-1yiCwHaEb?rs=1&pid=ImgDetMain",
         status: "changer",
     },
     {
@@ -195,7 +195,7 @@ export const incidenceContent = [
         name: "fuit d'eau",
         nbredeEtage: 5,
         descriptiondudegat: "il y a une fuit d'eau dans l'etage 5",
-        avatar: "https://th.bing.com/th/id/OIP.CZRYLYGx0QdGiXhn6awLkQHaE8?w=202&h=135&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        avatar: "https://th.bing.com/th/id/R.407071575be785329b52072c4181ac19?rik=YQBdOQhHXEUklw&pid=ImgRaw&r=0",
         status: "changer",
     }
 ]
