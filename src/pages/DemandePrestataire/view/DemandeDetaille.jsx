@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Pres2 from '../../../assets/img/Prestataire/Pres2.png';
+
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function DemandeDetaille() {
+
+  const { id } = useParams()
+  const [prestataire, setprestataire] = useState({})
+  const getprestataire = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:9000/prestataire/getprestataire/${id}`)
+      console.log(response.data,"prestataire infos")
+      setprestataire(response.data)
+    } catch (error) {
+      console.log("prestataire n'est pas trouver")
+
+    }
+  }
+  useEffect(() => {
+    getprestataire(id)
+
+  }, [id])
   return (
     <Wrapper>
     <Container>
@@ -14,7 +33,7 @@ function DemandeDetaille() {
           <ImageSection>
             <ImageWrapper>
               <img 
-                src={Pres2} 
+                src={prestataire?.avatar} 
                 alt="Prestataire"
                 style={{
                   width: '130px',
@@ -30,25 +49,25 @@ function DemandeDetaille() {
               <label className="font20" style={{ fontFamily: 'bold', marginLeft: '90px', marginTop: '40px' }}>
                 Nom et Prénom:
               </label>
-              <p style={{ marginLeft: '90px' }}>Jean Dupont</p> 
+              <p style={{ marginLeft: '90px' }}>{prestataire?.name}</p> 
             </InputWrapper>
           </ImageSection>
           <DetailsWrapper>
             <Detail>
               <label className="font13">Email:</label>
-              <p className="font20">jean.dupont@example.com</p> {/* Exemple de valeur */}
+              <p className="font20">{prestataire?.email}</p> {/* Exemple de valeur */}
             </Detail>
             <Detail>
               <label className="font13">Travail:</label>
-              <p className="font20">Plombier</p> {/* Exemple de valeur */}
+              <p className="font20">{prestataire?.travail}</p> {/* Exemple de valeur */}
             </Detail>
             <Detail>
               <label className="font13">Téléphone:</label>
-              <p className="font20">+33 1 23 45 67 89</p> {/* Exemple de valeur */}
+              <p className="font20">{prestataire?.telephone}</p> {/* Exemple de valeur */}
             </Detail>
             <Detail>
               <label className="font13">Description:</label>
-              <p className="font20">Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.</p> {/* Exemple de valeur */}
+              <p className="font20">{prestataire?.description}</p> {/* Exemple de valeur */}
             </Detail>
             <Detail>
               <label className="font13">CV:</label>

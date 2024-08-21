@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Proprietaire from '../../../assets/img/proprietaire1.jpg'; 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function ProprietaireDetaille() {
+  
+  const { id } = useParams()
+  const [proprietaire, setproprietaire] = useState({})
+  const getproprietaire = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:9000/proprietaire/getproprietaire/${id}`)
+      console.log(response.data,"proprietaire infos")
+      setproprietaire(response.data)
+    } catch (error) {
+      console.log("proprietaire n'est pas trouver")
+
+    }
+  }
+  useEffect(() => {
+    getproprietaire(id)
+
+  }, [id])
+
   return (
     <Wrapper>
     <Container>
@@ -14,8 +33,8 @@ export default function ProprietaireDetaille() {
           <ImageSection>
             <ImageWrapper>
               <img 
-                src={Proprietaire} 
-                alt="Locataire"
+                src={proprietaire?.avatar}
+                alt="proprietaire"
                 style={{
                   width: '130px',
                   height: '130px',
@@ -30,20 +49,18 @@ export default function ProprietaireDetaille() {
               <label className="font20" style={{ fontFamily: 'bold', marginLeft: '90px', marginTop: '40px' }}>
                 Nom Complet:
               </label>
-              <p  style={{ marginLeft: '90px' }}>amira ben molehem</p> 
+              <p  style={{ marginLeft: '90px' }}>{proprietaire?.name}</p> 
             </InputWrapper>
           </ImageSection>
           <InputWrapper>
             <label className="font20">Email:</label>
-            <p >Amirabenmoleh52@gmail.com</p> 
+            <p >{proprietaire?.email}</p> 
             <label className="font20">Mot de passe:</label>
-            <p >amirabenmol4178</p> 
-            <label className="font20">Numéro de l'étage:</label>
-            <p>2</p> 
-            <label className="font20">Numéro de l'appartement:</label>
-            <p >3</p> 
-            <label className="font20">Statut:</label>
-            <p >Disponser</p> 
+            <p >{proprietaire?.password}</p>
+            <label className="font20">telephone:</label>
+            <p >{proprietaire?.telephone}</p>
+            <label className="font20">Status:</label>
+            <p >{proprietaire?.status}</p> 
           </InputWrapper>
           {/* Décommentez cette section si vous utilisez un bouton */}
           {/* <SumbitWrapper>

@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import html2canvas from 'html2canvas';
 import { FaPrint } from 'react-icons/fa'; // Importer l'icône d'impression
-import Télèphone from '../../../assets/img/contact2.jpg';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function IncidenceDetaille() {
+  const { id } = useParams()
+  const [incidence, setincidence] = useState({})
+  const getincidence = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:9000/incidence/getincidence/${id}`)
+      console.log(response.data,"incidence infos")
+      setincidence(response.data)
+    } catch (error) {
+      console.log("incidence n'est pas trouver")
+
+    }
+  }
+  useEffect(() => {
+    getincidence(id)
+
+  }, [id])
+
+
   const handleDownload = () => {
     html2canvas(document.querySelector("#capture")).then(canvas => {
       const link = document.createElement('a');
@@ -22,21 +41,40 @@ function IncidenceDetaille() {
           <HeaderInfo>
             <h1 className="font40 extraBold">Détails de l'incidence</h1>
           </HeaderInfo>
+          <ImageSection>
+          <ImageWrapper>
+              <img 
+                src={incidence?.avatar} 
+                alt="incidence"
+                style={{
+                  width: '130px',
+                  height: '130px',
+                  borderRadius: '20%',
+                  objectFit: 'cover',
+                  border: '1px solid #1F4B43',
+                  marginLeft: '10px'
+                }}
+              />
+            </ImageWrapper>
+            </ImageSection>
           <Detail>
             <Label className="font13">Nombre de l'étage:</Label>
-            <p className="font20">5</p> {/* Exemple de valeur */}
+            <p className="font20">{incidence?.nbredeEtage}</p> {/* Exemple de valeur */}
           </Detail>
           <Detail>
             <Label className="font13">Nom:</Label>
-            <p className="font20">Fuite d'eau</p> {/* Exemple de valeur */}
+            <p className="font20">{incidence?.name}</p> {/* Exemple de valeur */}
           </Detail>
           <Detail>
-            <Label className="font13">Photo:</Label>
-            <img src={Télèphone} alt="Incidence" className="font20" style={{ maxWidth: '40%' }} /> {/* Exemple de photo */}
+         
           </Detail>
           <Detail>
             <Label className="font13">Description:</Label>
-            <p className="font20">Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.</p> {/* Exemple de description */}
+            <p className="font20">{incidence?.descriptiondudegat}</p> {/* Exemple de description */}
+          </Detail>
+          <Detail>
+            <Label className="font13">Status:</Label>
+            <p className="font20">{incidence?.status}</p> {/* Exemple de description */}
           </Detail>
         </DetailsWrapper>
         <ButtonWrapper>
@@ -91,7 +129,17 @@ const Label = styled.label`
 const ButtonWrapper = styled.div`
   margin-top: 20px; /* Ajustez cette valeur pour obtenir l'espacement souhaité */
 `;
-
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin-right: 20px;
+`;
+const ImageSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+`;
 
 
 

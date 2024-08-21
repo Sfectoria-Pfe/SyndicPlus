@@ -50,26 +50,26 @@ export default function Router() {
 
                     <Route path='/prestataire' element={<Prestataire />}>
                         <Route index element={<PrestataireList />} />
-                        <Route path='prestataireDetaille' element={<PrestataireDetaille />} />
+                        <Route path='prestataireDetaille/:id' element={<PrestataireDetaille />} />
                         <Route path='addPrestataire' element={<AddPrestataire />} />
                         <Route path='EditPrestataire' element={<EditPrestataire />} />
                     </Route>
                     <Route path='/incidences' element={<Profile />}>
                         <Route index element={<IncidencesListe />} />
-                        <Route path='incidencedetaille' element={<IncidenceDetaille  />} />
+                        <Route path='incidencedetaille/:id' element={<IncidenceDetaille  />} />
                         <Route path='addincidence' element={<AddIncidence />} />
                         <Route path='editincidence' element={<EditIncidence />} />
                     </Route>
 
                     <Route path='/proprietaire' element={<Proprietaire />}>
                         <Route index element={<ProprietaireListe />} />
-                        <Route path='proprietairedetaille' element={<ProprietaireDetaille  />} />
+                        <Route path='proprietairedetaille/:id' element={<ProprietaireDetaille  />} />
                         <Route path='addproprietaire' element={<AddProprietaire />} />
                     </Route>
 
                     <Route path='/DemandePrestataire' element={<DemandePrestataire />}>
                         <Route index element={<DemandeListe />} />
-                        <Route path='DemandeDetaille' element={<DemandeDetaille/>} />
+                        <Route path='DemandeDetaille/:id' element={<DemandeDetaille/>} />
                     </Route>
 
                     <Route path='/profile' element={<Profile />}>

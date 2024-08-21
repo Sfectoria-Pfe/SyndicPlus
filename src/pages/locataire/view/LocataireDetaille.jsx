@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -8,10 +7,6 @@ function LocataireDetaille() {
 
   const { id } = useParams()
   const [locataire, setlocataire] = useState({})
-
-
-
-
   const getlocataire = async (id) => {
     try {
       const response = await axios.get(`http://localhost:9000/locataire/onelocataire/${id}`)
@@ -26,8 +21,6 @@ function LocataireDetaille() {
     getlocataire(id)
 
   }, [id])
-
-
 
   return (
     <Wrapper>

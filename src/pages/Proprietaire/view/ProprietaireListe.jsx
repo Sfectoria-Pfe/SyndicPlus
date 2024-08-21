@@ -33,7 +33,7 @@ export default function IncidenceListe() {
       let response = await axios.get("http://localhost:9000/proprietaire/getproprietaire")
       const dataWithId = response.data.map((item, index) => ({
         ...item,
-        id: item.id || index + 1
+        id:item._id
       }));
       setRows(dataWithId);
 
@@ -127,7 +127,7 @@ export default function IncidenceListe() {
         <GridActionsCellItem
           icon={<VisibilityIcon />}
           label="View"
-          onClick={() => navigate("/proprietaire/proprietairedetaille")}
+          onClick={() => navigate(`/proprietaire/proprietairedetaille/${id}`)}
           color="inherit"
         />,
         <GridActionsCellItem

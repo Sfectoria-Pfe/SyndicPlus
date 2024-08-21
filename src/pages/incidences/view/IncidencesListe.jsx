@@ -39,7 +39,7 @@ export default function IncidenceListe() {
       let response = await axios.get("http://localhost:9000/incidence/getincidence")
       const dataWithId = response.data.map((item, index) => ({
         ...item,
-        id: item.id || index + 1
+        id:item._id
       }));
       setRows(dataWithId);
 
@@ -130,13 +130,13 @@ export default function IncidenceListe() {
           <GridActionsCellItem
             icon={<VisibilityIcon />}
             label="View"
-            onClick={() => navigate("/incidences/incidencedetaille")}
+            onClick={() => navigate(`/incidences/incidencedetaille/${id}`)}
             color="inherit"
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={handleDeleteClick(id)}
+           onClick={handleDeleteClick(id)}
             color="inherit"
           />,
         ];

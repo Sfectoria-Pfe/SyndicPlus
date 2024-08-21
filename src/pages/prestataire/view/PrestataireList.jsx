@@ -34,7 +34,7 @@ export default function PrestataireListe() {
       let response = await axios.get("http://localhost:9000/prestataire/getprestataire")
       const dataWithId = response.data.map((item, index) => ({
         ...item,
-        id: item.id || index + 1
+        id:item._id
       }));
       setRows(dataWithId);
 
@@ -157,7 +157,7 @@ export default function PrestataireListe() {
         <GridActionsCellItem
           icon={<VisibilityIcon />}
           label="View"
-          onClick={() => navigate("/prestataire/prestataireDetaille")}
+          onClick={() => navigate(`/prestataire/prestataireDetaille/${id}`)}
           color="inherit"
         />,
         <GridActionsCellItem
