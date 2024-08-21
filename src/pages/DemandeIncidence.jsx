@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 function DemandeIncidence() {
   return (
-    <Wrapper id="contact">
+    <Wrapper>
       <Container>
         <HeaderInfo>
           <h1 className="font40 extraBold">Demande d'incidence</h1>

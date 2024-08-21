@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 // import logo from '../assets/img/Logo.png';
 import batiment from '../assets/img/header.png';
-
+import 'aos/dist/aos.css';
+import AOS from "aos";
 function Login() {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+
+    });
+    AOS.refresh();
+  }, []);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -40,7 +51,7 @@ function Login() {
   return (
     <Container className="my-5 gradient-form">
       <Row>
-        <Col style={{ marginTop: "100px" }}>
+        <Col style={{ marginTop: "100px" }} data-aos='fade-right'>
           <div className="d-flex flex-column ms-5 me-5">
             <div className="text-center">
               {/* <img src={logo} style={{ width: '185px' }} alt="logo" /> */}
@@ -91,7 +102,7 @@ function Login() {
           marginTop: "80px",
           minHeight: "600px",
           maxWidth: "550px"
-        }}>
+        }} data-aos='fade-left'>
         </Col>
       </Row>
     </Container>

@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Locataire from '../../../assets/img/Locataire1.jpg'; 
+
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function LocataireDetaille() {
+
+  const { id } = useParams()
+  const [locataire, setlocataire] = useState({})
+
+
+
+
+  const getlocataire = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:9000/locataire/onelocataire/${id}`)
+      console.log(response.data,"locataire infos")
+      setlocataire(response.data)
+    } catch (error) {
+      console.log("locataire n'est pas trouver")
+
+    }
+  }
+  useEffect(() => {
+    getlocataire(id)
+
+  }, [id])
+
+
+
   return (
     <Wrapper>
       <Container>
@@ -13,8 +39,9 @@ function LocataireDetaille() {
           <Form>
             <ImageSection>
               <ImageWrapper>
-                <img 
-                  src={Locataire} 
+               
+                <img
+                  src={locataire?.avatar}
                   alt="Locataire"
                   style={{
                     width: '130px',
@@ -30,20 +57,23 @@ function LocataireDetaille() {
                 <label className="font20" style={{ fontFamily: 'bold', marginLeft: '90px', marginTop: '40px' }}>
                   Nom Complet:
                 </label>
-                <p  style={{ marginLeft: '90px' }}>Mohamed Salah</p> 
+                <p style={{ marginLeft: '90px' }}>{locataire?.name}</p>
               </InputWrapper>
             </ImageSection>
             <InputWrapper>
               <label className="font20">Email:</label>
-              <p >mohamedSa52@gmail.com</p> 
+              <p >{locataire?.email}</p>
               <label className="font20">Mot de passe:</label>
-              <p >mohamedSal520147</p> 
+              <p >{locataire?.password}</p>
               <label className="font20">Numéro de l'étage:</label>
-              <p>4</p> 
+              <p>{locataire?.nbredeEtage}</p>
               <label className="font20">Numéro de l'appartement:</label>
-              <p >5</p> 
-              <label className="font20">Statut:</label>
-              <p >Payer</p>
+              <p >{locataire?.appartement}</p>
+              <label className="font20">telephone:</label>
+              <p >{locataire?.telephone}</p>
+              <label className="font20">Status:</label>
+              <p >{locataire?.status}</p>
+
             </InputWrapper>
             {/* Décommentez cette section si vous utilisez un bouton */}
             {/* <SumbitWrapper>

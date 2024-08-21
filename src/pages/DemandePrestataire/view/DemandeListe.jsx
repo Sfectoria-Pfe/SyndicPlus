@@ -5,83 +5,14 @@ import CloseIcon from '@mui/icons-material/Close';  // Icône de refus
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
-import Pres1 from '../../../assets/img/Prestataire/Pres1.png';
-import Pres2 from '../../../assets/img/Prestataire/Pres2.png';
-import Pres3 from '../../../assets/img/Prestataire/Pres3.png';
-import Pres4 from '../../../assets/img/Prestataire/Pres4.jpg';
-
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-
 import {
   DataGrid,
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
-  randomArrayItem,
-} from '@mui/x-data-grid-generator';
-
-const roles = ['Plombier', 'Pharmacien', 'Doctor'];
-const randomRole = () => {
-  return randomArrayItem(roles);
-};
-
-const initialRows = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 25353555,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'jean.dupont@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres1,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 36535523,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'maria.dupont@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres2,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 19525432,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'peter.parker@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres3,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 28535425,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'bruce.wayne@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres4,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 23452543,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'clark.kent@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres2,
-  },
-];
+import axios from 'axios';
 
 const showSuccess = () => {
   toast.success('Ajout réussie!');
@@ -92,7 +23,29 @@ const showReject = () => {
 };
 
 export default function DemandeListe() {
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState([]);
+
+  const getDemandePrestataire = async () => {
+    try {
+     
+      let response = await axios.get("http://localhost:9000/prestataire/getprestataire")
+      const dataWithId = response.data.map((item, index) => ({
+        ...item,
+        id: item.id || index + 1
+      }));
+      setRows(dataWithId);
+
+    } catch (error) {
+      <p>you have an error</p>
+
+    }
+
+  }
+
+  React.useEffect(() => {
+    getDemandePrestataire()
+
+  }, [])
   const [rowModesModel, setRowModesModel] = React.useState({});
   const navigate = useNavigate();
 
@@ -110,7 +63,7 @@ export default function DemandeListe() {
 
   const columns = [
     {
-      field: 'photo',
+      field: 'avatar',
       headerName: 'Photo',
       width: 100,
       renderCell: (params) => (
@@ -143,15 +96,14 @@ export default function DemandeListe() {
       editable: true,
     },
     {
-      field: 'role',
+      field: 'travail',
       headerName: 'Travail',
       width: 220,
       editable: true,
       type: 'singleSelect',
-      valueOptions: roles,
     },
     {
-      field: 'Description',
+      field: 'description',
       headerName: 'Description',
       width: 290,
       editable: true,

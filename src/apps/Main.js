@@ -26,10 +26,9 @@ import { MdOutlineMessage } from "react-icons/md";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { TiThListOutline } from "react-icons/ti";
 import { FaBuildingUser } from "react-icons/fa6";
-import Logo from '../assets/img/Logo.png';
-import Image from 'react-bootstrap/Image';
+// import Logo from '../assets/img/Logo.png';
+// import Image from 'react-bootstrap/Image';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-
 
 const drawerWidth = 240;
 
@@ -109,6 +108,7 @@ export default function Main() {
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
   }));
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -126,10 +126,8 @@ export default function Main() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            SyndicPlus
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {/* Conteneur des icônes aligné à droite */}
+          <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
             <IconButton color="inherit">
               <IoIosNotificationsOutline />
             </IconButton>
@@ -144,7 +142,10 @@ export default function Main() {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', color:'#1F4B43' }}>
+            SyndicPlus
+          </Typography>
+          {/* <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
             <Image
               src={Logo}
               alt="Logo"
@@ -152,15 +153,14 @@ export default function Main() {
               height="70"
               className="d-inline-block align-top"
             />
-          </Box>
+          </Box> */}
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <FaChevronRight /> : <FaChevronLeft />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Divider />
         <List>
-          {[{ title: 'Dashboard', icon: <TbLayoutDashboard />, link: "/" }, { title: 'Demande incidence', icon: <TbTablePlus />, link: "/demandeIncidence" }, { title: 'Incidence', icon: <TiThListOutline />, link: "/incidences" }, { title: 'Prestataire', icon: <FaThList />, link: "/prestataire " }, { title: 'Demande Prestataire', icon: <FaThList />, link: "/DemandePrestataire" }, { title: 'Paiement en ligne', icon: <RiSecurePaymentFill />, link: "/paiement" }, { title: 'Locataire', icon: <FaBuildingUser />, link: "/locataire" }, { title: 'Proprietaire', icon: <FaBuildingUser />, link: "/proprietaire" }].map((text, index) => (
+          {[{ title: 'Dashboard', icon: <TbLayoutDashboard />, link: "/" }, { title: 'Demande incidence', icon: <TbTablePlus />, link: "/demandeIncidence" }, { title: 'Incidence', icon: <TiThListOutline />, link: "/incidences" }, { title: 'Prestataire', icon: <FaThList />, link: "/prestataire" }, { title: 'Demande Prestataire', icon: <FaThList />, link: "/DemandePrestataire" }, { title: 'Paiement en ligne', icon: <RiSecurePaymentFill />, link: "/paiement" }, { title: 'Locataire', icon: <FaBuildingUser />, link: "/locataire" }, { title: 'Proprietaire', icon: <FaBuildingUser />, link: "/proprietaire" }].map((text, index) => (
             <ListItem key={text.title} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -168,6 +168,7 @@ export default function Main() {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={() => navigate(`${text.link}`)}
               >
                 <ListItemIcon
                   sx={{
@@ -178,7 +179,7 @@ export default function Main() {
                 >
                   {text.icon}
                 </ListItemIcon>
-                <ListItemText primary={text.title} sx={{ opacity: open ? 1 : 0 }} onClick={() => navigate(`${text.link}`)} />
+                <ListItemText primary={text.title} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -192,3 +193,4 @@ export default function Main() {
     </Box>
   );
 }
+

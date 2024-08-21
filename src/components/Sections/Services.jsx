@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-scroll";
+import 'aos/dist/aos.css';
+import AOS from "aos";
 // Components
 import ClientSlider from "../Elements/ClientSlider";
 import ServiceBox from "../Elements/ServiceBox";
@@ -16,6 +18,16 @@ import { Button } from "react-bootstrap";
 
 
 export default function Services() {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+
+    });
+    AOS.refresh();
+  }, []);
   const [modalShow, setModalShow] = React.useState(false);
   return (
     <Wrapper id="services">
@@ -24,7 +36,7 @@ export default function Services() {
           <ClientSlider />
         </div>
       </div>
-      <div className="whiteBg" style={{ padding: "60px 0" }}>
+      <div className="whiteBg" style={{ padding: "60px 0" }} data-aos='fade-left'>
         <div className="container">
           <HeaderInfo>
             <h1 className="font40 extraBold">Nos Services</h1>
@@ -34,7 +46,7 @@ export default function Services() {
               labore et dolore magna aliquyam erat, sed diam voluptua. */}
             </p>
           </HeaderInfo>
-          <ServiceBoxRow className="flex">
+          <ServiceBoxRow className="flex" >
             <ServiceBoxWrapper>
               <ServiceBox
                 icon="roller"
@@ -62,7 +74,7 @@ export default function Services() {
             </ServiceBoxWrapper>
           </ServiceBoxRow>
         </div>
-        <div className="lightBg">
+        <div className="lightBg" data-aos='fade-right'>
           <div className="container">
             <Advertising className="flexSpaceCenter">
               <AddLeft>

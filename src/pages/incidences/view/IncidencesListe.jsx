@@ -12,68 +12,11 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
-  randomArrayItem,
-} from '@mui/x-data-grid-generator';
 import Typography from '@mui/material/Typography';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import axios from 'axios';
 
-const roles = ['Market', 'Finance', 'Development'];
-const randomRole = () => {
-  return randomArrayItem(roles);
-};
-
-const initialRows = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    etage: 1,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
-    Photo:"phot1.png",
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    etage: 2,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
-    Photo:"phot2.png",
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    etage: 3,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
-    Photo:"phot3.png",
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    etage: 4,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
-    Photo:"phot4.png",
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    etage: 5,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    DescriptionDuDegat: "Il y a une fuite d'eau importante dans le couloir du 5ème étage. Une intervention rapide est nécessaire.",
-    Photo:"phot5.png",
-  },
-];
 
 function EditToolbar(props) {
   const navigate = useNavigate();
@@ -88,7 +31,30 @@ function EditToolbar(props) {
 }
 
 export default function IncidenceListe() {
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState([]);
+
+  const getIncidences = async () => {
+    try {
+     
+      let response = await axios.get("http://localhost:9000/incidence/getincidence")
+      const dataWithId = response.data.map((item, index) => ({
+        ...item,
+        id: item.id || index + 1
+      }));
+      setRows(dataWithId);
+
+    } catch (error) {
+      <p>you have an error</p>
+
+    }
+
+  }
+
+  React.useEffect(() => {
+    getIncidences()
+
+  }, [])
+
   const [rowModesModel, setRowModesModel] = React.useState({});
   const navigate = useNavigate();
   
@@ -115,7 +81,7 @@ export default function IncidenceListe() {
 
   const columns = [
     {
-      field: "etage",
+      field: "nbredeEtage",
       headerName: "Nombre de l'étage",
       type: 'number',
       width: 100,
@@ -125,19 +91,27 @@ export default function IncidenceListe() {
     },
     { field: 'name', headerName: 'Nom', width: 180, editable: true },
     {
-      field: 'DescriptionDuDegat',
+      field: 'descriptiondudegat',
       headerName: 'Description de dégat',
       type: 'text',
       width: 180,
       editable: true,
     },
     {
-      field: 'Photo',
+      field: 'avatar',
       headerName: 'Photo',
       width: 220,
       editable: true,
       type: 'singleSelect',
-      valueOptions: roles,
+    },
+    {
+      field: "status",
+      headerName: "status",
+      type: 'number',
+      width: 100,
+      align: 'left',
+      headerAlign: 'left',
+      editable: true,
     },
     {
       field: 'actions',
@@ -188,6 +162,7 @@ export default function IncidenceListe() {
         <DataGrid
           rows={rows}
           columns={columns}
+          getRowId={(row) => row.id} 
           editMode="row"
           rowModesModel={rowModesModel}
           onRowEditStop={handleRowEditStop}

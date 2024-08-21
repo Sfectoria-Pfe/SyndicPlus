@@ -9,74 +9,10 @@ import Typography from '@mui/material/Typography';
 import { DataGrid, GridToolbarContainer, GridActionsCellItem, GridRowEditStopReasons } from '@mui/x-data-grid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
-import Loc1 from '../../../assets/img/Locataire1.jpg';
-import Loc2 from '../../../assets/img/Locataire2.jpg';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
-  randomArrayItem,
-} from '@mui/x-data-grid-generator';
-
-const roles = ['Market', 'Finance', 'Development'];
-const randomRole = () => randomArrayItem(roles);
-
-const initialRows = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 25122478,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'jean.dupont@example.com',
-    payement: 'payer',
-    photo: Loc1,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 36785632,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'maria.dupont@example.com',
-    payement: 'non payer',
-    photo: Loc1,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 19442568,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'clark.kent@example.com',
-    payement: 'Disponser',
-    photo: Loc2,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 28868745,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'peter.parker@example.com',
-    payement: 'non payer',
-    photo: Loc2,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 23654686,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: 'bruce.wayne@example.com',
-    payement: 'Disponser',
-    photo: Loc1,
-  },
-];
+import axios from 'axios';
 
 function EditToolbar(props) {
   const navigate = useNavigate();
-
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={() => navigate("/locataire/addLocataire")}>
@@ -87,7 +23,32 @@ function EditToolbar(props) {
 }
 
 export default function LocataireListe() {
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState([]);
+
+  const getLocataire = async () => {
+    try {
+
+      let response = await axios.get("http://localhost:9000/locataire/getlocataire")
+      const dataWithId = response.data.map((item, index) => ({
+        ...item,
+        id:item._id
+      }));
+      setRows(dataWithId);
+
+    } catch (error) {
+      <p>you have an error</p>
+
+    }
+
+  }
+
+  React.useEffect(() => {
+    getLocataire()
+
+  }, [])
+  console.log(rows,"rows");
+  
+
   const [rowModesModel, setRowModesModel] = React.useState({});
   const navigate = useNavigate();
 
@@ -114,7 +75,7 @@ export default function LocataireListe() {
 
   const columns = [
     {
-      field: 'photo',
+      field: 'avatar',
       headerName: 'Photo',
       width: 100,
       renderCell: (params) => (
@@ -131,30 +92,48 @@ export default function LocataireListe() {
       ),
     },
     { field: 'name', headerName: 'Nom complet', width: 180, editable: true },
-    {
-      field: 'telephone',
-      headerName: 'Téléphone',
-      type: 'number',
-      width: 100,
-      align: 'left',
-      headerAlign: 'left',
-      editable: true,
-    },
-    {
-      field: 'payement',
-      headerName: 'Statut',
-      width: 100,
-      align: 'left',
-      headerAlign: 'left',
-      editable: true,
-    },
+
+
     {
       field: 'email',
       headerName: 'Email',
       width: 220,
       editable: true,
       type: 'singleSelect',
-      valueOptions: roles,
+      // valueOptions: roles,
+    },
+    {
+      field: 'appartement',
+      headerName: 'appartement',
+      width: 100,
+      align: 'left',
+      headerAlign: 'left',
+      editable: true,
+    },
+    {
+      field: 'nbredeEtage',
+      headerName: "nombre de l'etage",
+      width: 100,
+      align: 'left',
+      headerAlign: 'left',
+      editable: true,
+    },
+    {
+      field: 'telephone',
+      headerName: 'telephone',
+      width: 100,
+      align: 'left',
+      headerAlign: 'left',
+      editable: true,
+    },
+    {
+      field: 'status',
+      headerName: 'status',
+      type: 'text',
+      width: 100,
+      align: 'left',
+      headerAlign: 'left',
+      editable: true,
     },
     {
       field: 'actions',
@@ -166,13 +145,13 @@ export default function LocataireListe() {
         <GridActionsCellItem
           icon={<VisibilityIcon />}
           label="View"
-          onClick={() => navigate("/locataire/locataireDetaille")}
+          onClick={() => navigate(`/locataire/locataireDetaille/${id}`)}
           color="inherit"
         />,
         <GridActionsCellItem
           icon={<DeleteIcon />}
           label="Delete"
-          onClick={handleDeleteClick(id)}
+          // onClick={handleDeleteClick(id)}
           color="inherit"
         />,
       ],
@@ -203,6 +182,7 @@ export default function LocataireListe() {
         <DataGrid
           rows={rows}
           columns={columns}
+          getRowId={(row) => row.id}
           editMode="row"
           rowModesModel={rowModesModel}
           onRowEditStop={handleRowEditStop}

@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 // Assets
 import contact1 from "../../assets/img/contact1.jpeg";
 import contact2 from "../../assets/img/contact2.jpg";
 import contact3 from "../../assets/img/contact3.png";
-
+import 'aos/dist/aos.css';
+import AOS from "aos";
 export default function Contact() {
-  
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+
+    });
+    AOS.refresh();
+  }, []);
   return (
     <Wrapper id="contact">
-      <div >
+      <div data-aos='fade-right'>
         <div className="container">
           <HeaderInfo>
             <h1 className="font40 extraBold">Contactez nous</h1>

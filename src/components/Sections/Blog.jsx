@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 // Components
 // import BlogBox from "../Elements/BlogBox";
 // import FullButton from "../Buttons/FullButton";
 import TestimonialSlider from "../Elements/TestimonialSlider";
-
+import 'aos/dist/aos.css';
+import AOS from "aos";
 export default function Blog() {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+
+    });
+    AOS.refresh();
+  }, []);
   return (
     <Wrapper id="review">
       {/* <div className="whiteBg"> */}
@@ -83,7 +94,7 @@ export default function Blog() {
           </div>
         </div>
       // </div> */}
-      <div className="lightBg" style={{padding: '50px 0'}}>
+      <div className="lightBg" style={{padding: '50px 0'}} data-aos='fade-left'>
         <div className="container">
           <HeaderInfo>
             <h1 className="font40 extraBold">What They Say?</h1>

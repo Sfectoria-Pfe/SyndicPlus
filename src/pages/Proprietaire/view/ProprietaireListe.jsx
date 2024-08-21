@@ -9,71 +9,8 @@ import Typography from '@mui/material/Typography';
 import { DataGrid, GridToolbarContainer, GridActionsCellItem, GridRowEditStopReasons } from '@mui/x-data-grid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
-import Pro1 from '../../../assets/img/proprietaire1.jpg';
-import Pro2 from '../../../assets/img/proprietaire2.jpg';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
-  randomArrayItem,
-  randomEmail,
-} from '@mui/x-data-grid-generator';
+import axios from 'axios';
 
-const roles = ['Market', 'Finance', 'Development'];
-const randomRole = () => randomArrayItem(roles);
-
-const initialRows = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 25243525,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: randomEmail(),
-    payement: 'Disponser',
-    photo: Pro1,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 36243455,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: randomEmail(),
-    payement: 'non payer',
-    photo: Pro1,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 19324345,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: randomEmail(),
-    payement: 'payer',
-    photo: Pro1,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 28757356,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: randomEmail(),
-    payement: 'non payer',
-    photo: Pro2,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 23575477,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    email: randomEmail(),
-    payement: 'payer',
-    photo: Pro2,
-  },
-];
 
 function EditToolbar(props) {
   const navigate = useNavigate();
@@ -88,7 +25,30 @@ function EditToolbar(props) {
 }
 
 export default function IncidenceListe() {
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState([]);
+
+  const getProprietaire = async () => {
+    try {
+     
+      let response = await axios.get("http://localhost:9000/proprietaire/getproprietaire")
+      const dataWithId = response.data.map((item, index) => ({
+        ...item,
+        id: item.id || index + 1
+      }));
+      setRows(dataWithId);
+
+    } catch (error) {
+      <p>you have an error</p>
+
+    }
+
+  }
+
+  React.useEffect(() => {
+    getProprietaire()
+
+  }, [])
+
   const [rowModesModel, setRowModesModel] = React.useState({});
   const navigate = useNavigate();
 
@@ -115,7 +75,7 @@ export default function IncidenceListe() {
 
   const columns = [
     {
-      field: 'photo',
+      field: 'avatar',
       headerName: 'Photo',
       width: 100,
       renderCell: (params) => (
@@ -141,21 +101,22 @@ export default function IncidenceListe() {
       headerAlign: 'left',
       editable: true,
     },
-    {
-      field: 'payement',
-      headerName: 'Statut',
-      width: 80,
-      align: 'left',
-      headerAlign: 'left',
-      editable: true,
-    },
-    {
+       {
       field: 'email',
       headerName: 'Email',
       width: 220,
       editable: true,
       type: 'email',
     },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 80,
+      align: 'left',
+      headerAlign: 'left',
+      editable: true,
+    },
+ 
     {
       field: 'actions',
       type: 'actions',
@@ -203,6 +164,7 @@ export default function IncidenceListe() {
         <DataGrid
           rows={rows}
           columns={columns}
+          getRowId={(row) => row.id} 
           editMode="row"
           rowModesModel={rowModesModel}
           onRowEditStop={handleRowEditStop}

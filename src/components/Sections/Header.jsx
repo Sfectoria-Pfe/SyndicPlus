@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-scroll";
 // Components
@@ -7,24 +7,37 @@ import FullButton from "../Buttons/FullButton";
 import header from "../../assets/img/header.png";
 import QuotesIcon from "../../assets/svg/Quotes";
 import Dots from "../../assets/svg/Dots";
+import 'aos/dist/aos.css';
+import AOS from "aos";
 
 export default function Header() {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+
+    });
+    AOS.refresh();
+  }, []);
+
   return (
-    <Wrapper id="home" className="container flexSpaceCenter">
-      <LeftSide className="flexCenter">
+    <Wrapper id="home" className="container flexSpaceCenter mt-4" data-aos="fade-right">
+      <LeftSide className="flexCenter mb-10">
         <div>
-          <h1 className="extraBold font60">Syndic Plus</h1>
-          <HeaderP className="font13 semiBold">
-        bienvenue dans notre application.
+          <h1 className="extraBold font60 mb-2">We Are Syndic Plus</h1>
+          <HeaderP className="font13 " style={{ fontWeight: 'semi-bold' }}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam esse corrupti temporibus? Deserunt odit consectetur vel eveniet temporibus, fugit ratione quibusdam eos nam atque sapiente placeat necessitatibus magnam aut ad!
           </HeaderP>
           <BtnWrapper>
-          <Link to="projects"> <FullButton title="A propos de nous" /></Link>
+            <Link to="projects"> <FullButton title="A propos de nous" /></Link>
           </BtnWrapper>
         </div>
       </LeftSide>
-      <RightSide>
-        <ImageWrapper>
-          <Img className="radius8" src={header} alt="office" style={{zIndex: 9}} />
+      <RightSide >
+        <ImageWrapper className="mb-8">
+          <Img className="radius8" src={header} alt="office" style={{ zIndex: 9 }} />
           <QuoteWrapper className="flexCenter darkBg radius8">
             <QuotesWrapper>
               <QuotesIcon />
@@ -40,7 +53,7 @@ export default function Header() {
             <Dots />
           </DotsWrapper>
         </ImageWrapper>
-        <GreyDiv className="lightBg"></GreyDiv>
+        {/* <GreyDiv className="lightBg  "></GreyDiv> */}
       </RightSide>
     </Wrapper>
   );
@@ -93,17 +106,17 @@ const BtnWrapper = styled.div`
     margin: 0 auto;
   }
 `;
-const GreyDiv = styled.div`
-  width: 30%;
-  height: 700px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 0;
-  @media (max-width: 960px) {
-    display: none;
-  }
-`;
+// const GreyDiv = styled.div`
+//   width: 30%;
+//   height: 600px;
+//   position: absolute;
+//   top: 5;
+//   right: 0;
+//   z-index: 0;
+//   @media (max-width: 960px) {
+//     display: none;
+//   }
+// `;
 const ImageWrapper = styled.div`
   display: flex;
   justify-content: flex-end;

@@ -9,79 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { DataGrid, GridToolbarContainer, GridActionsCellItem, GridRowEditStopReasons } from '@mui/x-data-grid';
 import { Rating } from '@mui/material';
-import Pres1 from '../../../assets/img/Prestataire/Pres1.png';
-import Pres2 from '../../../assets/img/Prestataire/Pres2.png';
-import Pres3 from '../../../assets/img/Prestataire/Pres3.png';
-import Pres4 from '../../../assets/img/Prestataire/Pres4.jpg';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
-  randomArrayItem,
-} from '@mui/x-data-grid-generator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
-
-const roles = ['Plombier', 'plombier', 'Pharmacien'];
-const randomRole = () => randomArrayItem(roles);
-
-const initialRows = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 25425445,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    commentaire: 3, // Nombre d'étoiles
-    email: 'jean.dupont@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres1,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 36535357,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    commentaire: 5, // Nombre d'étoiles
-    email: 'maria.dupont@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres2,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 19468686,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    commentaire: 2, // Nombre d'étoiles
-    email: 'peter.parker@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres3,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 28463856,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    commentaire: 4, // Nombre d'étoiles
-    email: 'bruce.wayne@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres4,
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    telephone: 23352358,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-    commentaire: 1, // Nombre d'étoiles
-    email: 'clark.kent@example.com',
-    Description: "Expert en plomberie avec 10 ans d'expérience dans la rénovation et la maintenance.",
-    photo: Pres2,
-  },
-];
+import axios from 'axios';
 
 function EditToolbar(props) {
   const navigate = useNavigate();
@@ -96,7 +26,30 @@ function EditToolbar(props) {
 }
 
 export default function PrestataireListe() {
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState([]);
+
+  const getPrestataire = async () => {
+    try {
+     
+      let response = await axios.get("http://localhost:9000/prestataire/getprestataire")
+      const dataWithId = response.data.map((item, index) => ({
+        ...item,
+        id: item.id || index + 1
+      }));
+      setRows(dataWithId);
+
+    } catch (error) {
+      <p>you have an error</p>
+
+    }
+
+  }
+
+  React.useEffect(() => {
+    getPrestataire()
+
+  }, [])
+
   const [rowModesModel, setRowModesModel] = React.useState({});
   const navigate = useNavigate();
 
@@ -121,13 +74,10 @@ export default function PrestataireListe() {
     return updatedRow;
   };
 
-  const handleRatingChange = (newValue, id) => {
-    setRows(rows.map(row => row.id === id ? { ...row, commentaire: newValue } : row));
-  };
 
   const columns = [
     {
-      field: 'photo',
+      field: 'avatar',
       headerName: 'Photo',
       width: 100,
       renderCell: (params) => (
@@ -161,15 +111,14 @@ export default function PrestataireListe() {
       editable: true,
     },
     {
-      field: 'role',
+      field: 'travail',
       headerName: 'Travail',
       width: 180,
       editable: true,
       type: 'singleSelect',
-      valueOptions: roles,
     },
     {
-      field: 'Description',
+      field: 'description',
       headerName: 'Description',
       width: 220,
       editable: true,
@@ -181,8 +130,13 @@ export default function PrestataireListe() {
       editable: true,
       renderCell: (params) => (
         <Rating
-          value={params.value}
-          onChange={(event, newValue) => handleRatingChange(newValue, params.id)}
+          value={params.value || 0} // Assurez-vous que la valeur est numérique
+          onChange={(event, newValue) => {
+            const updatedRows = rows.map(row => 
+              row.id === params.id ? { ...row, commentaire: newValue } : row
+            );
+            setRows(updatedRows);
+          }}
           max={5}
         />
       ),
@@ -234,6 +188,7 @@ export default function PrestataireListe() {
         <DataGrid
           rows={rows}
           columns={columns}
+          getRowId={(row) => row.id} 
           editMode="row"
           rowModesModel={rowModesModel}
           onRowEditStop={handleRowEditStop}

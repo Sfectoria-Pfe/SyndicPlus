@@ -6,7 +6,7 @@ import Main from '../apps/Main';
 import Login from '../screens/Login';
 import Dashboard from '../pages/Dashboard';
 import Auth from '../apps/Auth';
-import SignUp from '../screens/SignUp';
+// import SignUp from '../screens/SignUp';
 import Locataire from '../pages/locataire/Locataire';
 import LocataireList from '../pages/locataire/view/LocataireListe';
 import LocataireDetaille from '../pages/locataire/view/LocataireDetaille';
@@ -44,7 +44,7 @@ export default function Router() {
 
                     <Route path='/locataire' element={<Locataire />} >
                         <Route index element={< LocataireList />} />
-                        <Route path='locataireDetaille' element={<LocataireDetaille />} />
+                        <Route path='locataireDetaille/:id' element={<LocataireDetaille />} />
                         <Route path='addLocataire' element={<AddLocataire />} />
                     </Route>
 
@@ -84,7 +84,7 @@ export default function Router() {
                     <Route path="/" element={<Auth />}>
                         <Route index element={<Landing />} />
                         <Route path='login' element={<Login />} />
-                        <Route path='SignUp' element={<SignUp />} />
+                        {/* <Route path='SignUp' element={<SignUp />} /> */}
 
                     </Route>
                 )}

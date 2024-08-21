@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { MdOutlineBedroomChild } from "react-icons/md";
 import { TbBath } from "react-icons/tb";
@@ -20,12 +20,24 @@ import Appart6 from "../../assets/img/Appartements/Appart6.png";
 import Batiment from "../../assets/img/add/Batiment.jpg";
 import Demo from "./Demo";
 import { Button } from "react-bootstrap";
+import 'aos/dist/aos.css';
+import AOS from "aos";
 
 export default function Projects() {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+
+    });
+    AOS.refresh();
+  }, []);
   const [modalShow, setModalShow] = React.useState(false);
   return (
     <Wrapper id="projects">
-      <div className="lightBg">
+      <div className="lightBg" data-aos='fade-left'>
         <div className="container">
           <Advertising className="flexSpaceCenter">
             <AddLeft>
@@ -54,7 +66,7 @@ export default function Projects() {
           </Advertising>
         </div>
       </div>
-      <div className="whiteBg " style={{marginTop:"250px"}}>
+      <div className="whiteBg " style={{marginTop:"250px"}} data-aos='fade-right'>
         <div className="container" >
           <HeaderInfo>
             <h1 className="font40 extraBold">nos appartement dans notre bâtiment</h1>
