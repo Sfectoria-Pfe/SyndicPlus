@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.get('/getproprietaire', getALLProprietaire);
 router.get('/getproprietaire/:id', getProprietaireById);
-router.post('/getproprietaire', creatProprietaire);
+router.post('/addproprietaire', creatProprietaire);
 router.delete('/deleteProprietaire/:id', deleteProprietaire);
 
 export default router;

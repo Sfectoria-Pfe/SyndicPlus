@@ -81,14 +81,14 @@ function PrestataireDetaille() {
                 <label className="font13">Description:</label>
                 <p className="font20">{prestataire?.description}</p> {/* Exemple de valeur */}
               </Detail>
-              <Detail>
+              {/* <Detail>
                 <label className="font13">CV:</label>
                 <p className="font20">
                   <a href="/path/to/cv-jean-dupont.pdf" download>
                     Imprimer
                   </a>
                 </p>
-              </Detail>
+              </Detail> */}
               <Detail>
                 <label className="font13">Commentaire:</label>
                 <Commentary>

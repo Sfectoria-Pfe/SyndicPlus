@@ -1,51 +1,114 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import { Button } from 'react-bootstrap';
-import { MdAddAPhoto } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { FaCloudUploadAlt } from "react-icons/fa";
 
 function AddPrestataire() {
+  const navigate = useNavigate()
+  const [newPrestataire, setNewPrestataire] = useState({
+    name: '',
+    email: '',
+    travail: '',
+    description: '',
+    telephone: '',
+    avatar: ''
+  })
+
+  const preset_key = "fh9al9ga";
+  const cloud_name = "dxhz5fyrw";
+
+
+  const handleFile = (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData();
+    formData.append('file', file)
+    formData.append("upload_preset", preset_key);
+    axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData).then((response) => {
+      console.log("uploded image url:", response.data.secure_url)
+      setNewPrestataire((prevPrestataire) => {
+        return { ...prevPrestataire, avatar: response.data.secure_url }
+      })
+    })
+      .catch((err) => console.log(err))
+  }
+
+  const addPrestataire = async (body) => {
+    try {
+      const response = await axios.post("http://localhost:9000/prestataire/addprestataire", body)
+      return response
+    } catch (error) {
+      console.log(error)
+      return { error: true }
+    }
+  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewPrestataire({ ...newPrestataire, [name]: value })
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    addPrestataire(newPrestataire).then((response) => {
+      if (!response.error) navigate(-1)
+    })
+  }
+
   return (
     <Wrapper>
       <Container>
         <HeaderInfo>
-          {/* <h1 className="font40 extraBold">Ajouter Prestataire</h1> */}
+          <h1 className="font40 extraBold">Ajouter Prestataire</h1>
         </HeaderInfo>
         <FormWrapper>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <ImageSection>
               <ImageWrapper>
                 <img
-                  alt=""
+                  src={newPrestataire.avatar}
+                  alt=''
                   style={{
                     width: '130px',
                     height: '130px',
                     borderRadius: '20%',
                     objectFit: 'cover',
                     border: '1px solid #1F4B43',
-                    marginLeft:"10px"
+                    marginLeft: "10px"
                   }}
                 />
-                <MdAddAPhoto className="photo-icon" />
+                <input
+                  type="file"
+                  id="fileUpload"
+                  style={{ display: 'none' }}
+                  onChange={handleFile}
+                />
+                {!newPrestataire.avatar && (
+                  <FaCloudUploadAlt
+                    size={30}
+                    className='photo-icon'
+                    onClick={() => document.getElementById('fileUpload').click()}
+                  />
+                )}
               </ImageWrapper>
               <InputWrapper>
-                <label className="font13" style={{ fontFamily: "bold",marginLeft:"90px" ,marginTop:"40px"}}>Nom et Prénom:</label>
-                <input type="text" id="nometprenom" name="nometprenom" className="font20"  style={{marginLeft:"90px"}}/>
+                <label className="font13" style={{ fontFamily: "bold", marginLeft: "90px", marginTop: "40px" }}>Nom Complet:</label>
+                <input type="text" id="nometprenom" name="name" className="font20" style={{ marginLeft: "90px" }} onChange={handleChange} />
               </InputWrapper>
             </ImageSection>
             <InputWrapper>
-              <label className="font13" style={{ fontFamily: "bold" ,marginTop:"20px"}}>Email:</label>
-              <input type="text" id="email" name="email" className="font20" />
+              <label className="font13" style={{ fontFamily: "bold", marginTop: "20px" }}>Email:</label>
+              <input type="text" id="email" name="email" className="font20" onChange={handleChange} />
               <label className="font13" style={{ fontFamily: "bold" }}>Travail:</label>
-              <input type="text" id="subject" name="sujet" className="font20" />
+              <input type="text" id="subject" name="travail" className="font20" onChange={handleChange} />
               <label className="font13" style={{ fontFamily: "bold" }}>Téléphone:</label>
-              <input type="number" id="telephone" name="telephone" className="font20" />
+              <input type="number" id="telephone" name="telephone" className="font20" onChange={handleChange} />
               <label className="font13" style={{ fontFamily: "bold" }}>Description:</label>
-              <textarea id="description" name="description" className="font20" />
-              <label className="font13" style={{ fontFamily: "bold" }}>CV:</label>
-              <input type="file" id="cv" name="cv" className="font20" />
+              <textarea id="description" name="description" className="font20" onChange={handleChange} />
+              {/* <label className="font13" style={{ fontFamily: "bold" }}>CV:</label>
+              <input type="file" id="cv" name="cv" className="font20" /> */}
             </InputWrapper>
             <SumbitWrapper>
-              <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }}>
+              <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }} onClick={handleSubmit}>
                 Ajouter
               </Button>
             </SumbitWrapper>
@@ -64,12 +127,13 @@ const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5; /* Vous pouvez changer la couleur de fond si nécessaire */
+  // background-color: #f5f5f5; /* Vous pouvez changer la couleur de fond si nécessaire */
 `;
 
 const Container = styled.div`
   width: 100%;
-  max-width: 800px; /* Largeur maximale du conteneur pour le formulaire */
+  max-width: 800px;
+    margin-top:100px;
 `;
 
 const HeaderInfo = styled.div`

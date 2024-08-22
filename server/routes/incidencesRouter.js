@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/getincidence', getALLIncidences);
 router.get('/getincidence/:id', getIncidenceById);
-router.post('/getincidence', creatIncidence);
+router.post('/addincidence', creatIncidence);
 router.delete('/deleteincidence/:id', deleteIncidence);
 
 export default router;

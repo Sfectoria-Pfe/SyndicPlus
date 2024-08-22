@@ -1,9 +1,61 @@
 import React from 'react';
 import styled from "styled-components";
-import { Button } from 'react-bootstrap'; 
-import { MdAddAPhoto } from "react-icons/md";
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+import { FaCloudUploadAlt } from 'react-icons/fa';
 
 function AddProprietaire() {
+
+  const navigate = useNavigate()
+  const [newProprietaire, setNewProprietaire] = useState({
+    avatar: '',
+    name: '',
+    email: '',
+    password: '',
+    telephone: '',
+    status: ''
+  })
+
+  const preset_key = "fh9al9ga";
+  const cloud_name = "dxhz5fyrw";
+
+  const handleFile = (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData();
+    formData.append('file', file)
+    formData.append("upload_preset", preset_key);
+    axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData).then((response) => {
+      console.log("uploded image url:", response.data.secure_url)
+      setNewProprietaire((prevProprietaire) => {
+        return { ...prevProprietaire, avatar: response.data.secure_url }
+      })
+    })
+      .catch((err) => console.log(err))
+  }
+
+  const addProprietaire = async (body) => {
+    try {
+      const response = await axios.post("http://localhost:9000/proprietaire/addproprietaire", body)
+      return response
+    } catch (error) {
+      console.log(error)
+      return { error: true }
+    }
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewProprietaire({ ...newProprietaire, [name]: value })
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    addProprietaire(newProprietaire).then((response) => {
+      if (!response.error) navigate(-1)
+    })
+  }
+
   return (
     <Wrapper>
       <Container>
@@ -11,10 +63,11 @@ function AddProprietaire() {
           <h1 className="font40 extraBold">Ajouter Proprietaire</h1>
         </HeaderInfo>
         <FormWrapper>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <ImageSection>
               <ImageWrapper>
                 <img
+                  src={newProprietaire.avatar}
                   alt=""
                   style={{
                     width: '130px',
@@ -25,23 +78,37 @@ function AddProprietaire() {
                     marginLeft: "10px"
                   }}
                 />
-                <MdAddAPhoto className="photo-icon" />
+                <input
+                  type="file"
+                  id="fileUpload"
+                  style={{ display: 'none' }}
+                  onChange={handleFile}
+                />
+                {!newProprietaire.avatar && (
+                  <FaCloudUploadAlt
+                    size={30}
+                    className='photo-icon'
+                    onClick={() => document.getElementById('fileUpload').click()}
+                  />
+                )}
               </ImageWrapper>
               <InputWrapper>
                 <label className="font13" style={{ fontFamily: "bold", marginLeft: "90px", marginTop: "40px" }}>Nom Complete:</label>
-                <input type="text" id="nomcomplet" name="nomcomplet" className="font20" style={{ marginLeft: "90px" }} />
+                <input type="text" name="name" className="font20" style={{ marginLeft: "90px" }} onChange={handleChange} />
               </InputWrapper>
             </ImageSection>
             <InputWrapper>
               <label className="font13">Email:</label>
-              <input type="email" id="email" name="email" className="font20" />
+              <input type="email" name="email" className="font20" onChange={handleChange} />
               <label className="font13">Mot de passe:</label>
-              <input type="password" id="password" name="password" className="font20" />
-              <label className="font13">Confirmer mot de passe:</label>
-              <input type="password" id="confirmpassword" name="confirmpassword" className="font20" />
+              <input type="password" name="password" className="font20" onChange={handleChange} />
+              <label className="font13">Télèphone:</label>
+              <input type="number" name="telephone" className="font20" onChange={handleChange} />
+              <label className="font13">Status:</label>
+              <input type="text" name="status" className="font20" onChange={handleChange} />
             </InputWrapper>
             <SumbitWrapper>
-              <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }}>
+              <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }} onClick={handleSubmit}>
                 Ajouter
               </Button>
             </SumbitWrapper>
@@ -60,7 +127,7 @@ const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5; /* Vous pouvez changer la couleur de fond si nécessaire */
+  // background-color: #f5f5f5; /* Vous pouvez changer la couleur de fond si nécessaire */
 `;
 
 const Container = styled.div`

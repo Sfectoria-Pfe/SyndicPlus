@@ -27,19 +27,16 @@ export default function DemandeListe() {
 
   const getDemandePrestataire = async () => {
     try {
-     
       let response = await axios.get("http://localhost:9000/prestataire/getprestataire")
       const dataWithId = response.data.map((item, index) => ({
         ...item,
-        id:item._id
+        id: item._id
       }));
       setRows(dataWithId);
 
     } catch (error) {
       <p>you have an error</p>
-
     }
-
   }
 
   React.useEffect(() => {
@@ -69,7 +66,7 @@ export default function DemandeListe() {
       renderCell: (params) => (
         <img
           src={params.value}
-          alt="" // Empty alt attribute for decorative images
+          alt=""
           style={{
             width: '60px',
             height: '60px',
@@ -153,7 +150,7 @@ export default function DemandeListe() {
       <Typography variant="h4" gutterBottom className='mb-4'>
         Les Demandes des Prestataires
       </Typography>
-      <Box sx={{width: '80%' }}> {/* Ajustez la largeur selon vos besoins */}
+      <Box sx={{ width: '80%' }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -167,7 +164,7 @@ export default function DemandeListe() {
           rowHeight={80}
         />
       </Box>
-      <ToastContainer /> {/* Placez le ToastContainer ici */}
+      <ToastContainer />
     </Box>
   );
 }
