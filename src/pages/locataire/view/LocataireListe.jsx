@@ -151,7 +151,7 @@ export default function LocataireListe() {
         <GridActionsCellItem
           icon={<DeleteIcon />}
           label="Delete"
-          // onClick={handleDeleteClick(id)}
+          onClick={handleDeleteClick(id)}
           color="inherit"
         />,
       ],
