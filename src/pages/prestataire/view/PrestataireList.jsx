@@ -115,7 +115,7 @@ export default function PrestataireListe() {
       headerName: 'Travail',
       width: 180,
       editable: true,
-      type: 'singleSelect',
+      type: 'travail',
     },
     {
       field: 'description',

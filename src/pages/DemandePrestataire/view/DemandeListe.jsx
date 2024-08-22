@@ -97,7 +97,7 @@ export default function DemandeListe() {
       headerName: 'Travail',
       width: 220,
       editable: true,
-      type: 'singleSelect',
+      type: 'Travail',
     },
     {
       field: 'description',

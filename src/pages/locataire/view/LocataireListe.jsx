@@ -92,15 +92,12 @@ export default function LocataireListe() {
       ),
     },
     { field: 'name', headerName: 'Nom complet', width: 180, editable: true },
-
-
     {
       field: 'email',
       headerName: 'Email',
       width: 220,
       editable: true,
-      type: 'singleSelect',
-      // valueOptions: roles,
+      type: 'email',
     },
     {
       field: 'appartement',
@@ -196,7 +193,7 @@ export default function LocataireListe() {
           rowHeight={80}
         />
       </Box>
-      <ToastContainer /> {/* Placez le ToastContainer ici */}
+      <ToastContainer />
     </Box>
   );
 }
