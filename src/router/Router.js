@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from '../screens/Landing';
@@ -32,9 +32,18 @@ import DemandeDetaille from '../pages/DemandePrestataire/view/DemandeDetaille';
 import DemandeListe from '../pages/DemandePrestataire/view/DemandeListe';
 import EditPrestataire from '../pages/prestataire/view/EditPrestataire';
 import EditIncidence from '../pages/incidences/view/EditIncidence';
+import getMe from '../components/GetMe';
 
 export default function Router() {
-    const [user, setUser] = useState(true)
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        // Vérifier si un token existe dans le localStorage
+        const token = localStorage.getItem('token');
+        if (token) {
+            setUser(getMe());
+        }
+    }, []);
 
     return (
         <BrowserRouter>

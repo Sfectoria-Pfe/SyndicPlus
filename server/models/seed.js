@@ -15,19 +15,28 @@ import Incidence from "./incidence.js";
 import Syndic from "./syndic.js";
 import Prestataire from "./prestataire.js";
 import Paiement from "./paiementenligne.js";
-
+import bcrypt from "bcrypt";
 
 await mongoose.connect("mongodb://localhost:27017/syndicPlus"
 ).then(() => { console.log("Data base connected successfuly."); }).catch((error) => { console.log("Data base connection failed:", error.message); })
 
 const user = async () => {
     try {
-        await User.insertMany(userContent),
-            console.log("user seeded")
+        // Hacher les mots de passe
+        const hashedUsers = await Promise.all(userContent.map(async (user) => {
+            const hashedPassword = await bcrypt.hash(user.password, 10);
+            return { ...user, password: hashedPassword };
+        }));
+
+        // Insérer les utilisateurs avec les mots de passe hachés
+        await User.insertMany(hashedUsers);
+
+        console.log("Users seeded successfully");
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}
+};
+
 user();
 
 const locataire = async () => {
