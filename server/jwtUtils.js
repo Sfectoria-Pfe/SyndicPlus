@@ -1,12 +1,13 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
-
-const generateToken = (user)=>{
-    const secretKey= "syndicplus"
+const generateToken = (user) => {
+    const secretKey = 'syndicplus'; 
     const options = {
-        expiresIn:"1h"
-    }
-    const token = jwt.sign({user}, secretKey, options)
-    return token
-}
-export default generateToken;
+      expiresIn: '1h',
+    };
+  
+    const token = jwt.sign({user}, secretKey, options);
+    return token;
+  };
+  
+  export default generateToken

@@ -67,6 +67,11 @@ function AddLocataire() {
           <Form onSubmit={handleSubmit}>
             <ImageSection>
               <ImageWrapper>
+              <input
+              type="file"
+              onChange={handleFile}
+            />
+            
                 <img
                   src={newLocataire.avatar}
                   alt=''
@@ -112,22 +117,22 @@ function AddLocataire() {
               <label className="font13">Status:</label>
               <input type="text" name="status" className="font20" onChange={handleChange} />
             </InputWrapper>
-            <SumbitWrapper>
+            {/* <SumbitWrapper>
               <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }} onClick={handleSubmit}>
                 Ajouter
               </Button>
-            </SumbitWrapper>
+            </SubmitWrapper> */}
           </Form>
         </FormWrapper>
       </Container>
     </Wrapper>
-  )
+  );
 }
 
 export default AddLocataire;
 
 const Wrapper = styled.section`
-  width: 100%;
+   width: 100%;
   height: 100vh; /* Utiliser la hauteur de la fenêtre */
   display: flex;
   justify-content: center;
@@ -142,7 +147,7 @@ const Container = styled.div`
 `;
 
 const HeaderInfo = styled.div`
-  text-align: center;
+ text-align: center;
   padding-bottom: 30px;
 `;
 
@@ -152,13 +157,7 @@ const FormWrapper = styled.div`
 `;
 
 const Form = styled.form`
-  width: 100%;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  input,
+   input,
   textarea {
     width: 100%;
     background-color: transparent;
@@ -172,14 +171,17 @@ const Form = styled.form`
   textarea {
     min-height: 100px;
   }
+
+
 `;
 
-const SumbitWrapper = styled.div`
+const SubmitWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+
 const ImageSection = styled.div`
-  display: flex;
+   display: flex;
   align-items: center;
   margin-bottom: 30px;
 `;
@@ -201,6 +203,8 @@ const ImageWrapper = styled.div`
     border-radius: 50%;
     padding: 5px; /* Ajustez le padding pour que l'icône soit bien positionnée */
   }
+
+
 `;
 
 const InputWrapper = styled.div`
