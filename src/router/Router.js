@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from '../screens/Landing';
@@ -32,9 +32,15 @@ import DemandeDetaille from '../pages/DemandePrestataire/view/DemandeDetaille';
 import DemandeListe from '../pages/DemandePrestataire/view/DemandeListe';
 import EditPrestataire from '../pages/prestataire/view/EditPrestataire';
 import EditIncidence from '../pages/incidences/view/EditIncidence';
+import getMe from '../components/getMe';
 
 export default function Router() {
-    const [user, setUser] = useState(true)
+    const [user, setUser] = useState(null)
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token)
+           setUser(getMe()) 
+    }, [])
 
     return (
         <BrowserRouter>
@@ -52,24 +58,24 @@ export default function Router() {
                         <Route index element={<PrestataireList />} />
                         <Route path='prestataireDetaille/:id' element={<PrestataireDetaille />} />
                         <Route path='addPrestataire' element={<AddPrestataire />} />
-                        <Route path='EditPrestataire' element={<EditPrestataire />} />
+                        <Route path='EditPrestataire/:id' element={<EditPrestataire />} />
                     </Route>
                     <Route path='/incidences' element={<Profile />}>
                         <Route index element={<IncidencesListe />} />
-                        <Route path='incidencedetaille/:id' element={<IncidenceDetaille  />} />
+                        <Route path='incidencedetaille/:id' element={<IncidenceDetaille />} />
                         <Route path='addincidence' element={<AddIncidence />} />
-                        <Route path='editincidence' element={<EditIncidence />} />
+                        <Route path='editincidence/:id' element={<EditIncidence />} />
                     </Route>
 
                     <Route path='/proprietaire' element={<Proprietaire />}>
                         <Route index element={<ProprietaireListe />} />
-                        <Route path='proprietairedetaille/:id' element={<ProprietaireDetaille  />} />
+                        <Route path='proprietairedetaille/:id' element={<ProprietaireDetaille />} />
                         <Route path='addproprietaire' element={<AddProprietaire />} />
                     </Route>
 
                     <Route path='/DemandePrestataire' element={<DemandePrestataire />}>
                         <Route index element={<DemandeListe />} />
-                        <Route path='DemandeDetaille/:id' element={<DemandeDetaille/>} />
+                        <Route path='DemandeDetaille/:id' element={<DemandeDetaille />} />
                     </Route>
 
                     <Route path='/profile' element={<Profile />}>

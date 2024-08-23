@@ -151,7 +151,7 @@ export default function PrestataireListe() {
         <GridActionsCellItem
           icon={<EditIcon />}
           label="Edit"
-          onClick={() => navigate("/prestataire/EditPrestataire")}
+          onClick={() => navigate(`/prestataire/EditPrestataire/${id}`)}
           color="inherit"
         />,
         <GridActionsCellItem

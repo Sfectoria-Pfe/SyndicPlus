@@ -4,6 +4,7 @@ import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import batiment from '../assets/img/header.png';
 import 'aos/dist/aos.css';
 import AOS from "aos";
+import login from '../components/auth';
 function Login() {
   useEffect(() => {
     AOS.init({
@@ -20,18 +21,23 @@ function Login() {
   const [errors, setErrors] = useState({});
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newErrors = validateForm();
-    if (Object.keys(newErrors).length === 0) {
-      // Submit the form (e.g., make API call)
-      setValidated(true);
-      console.log('Form submitted successfully');
-    } else {
-      setValidated(false);
-      setErrors(newErrors);
-    }
-  };
+const handleSubmit = async(e)=>{
+  e.preventDefault()
+  await login(email, password)
+}
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const newErrors = validateForm();
+  //   if (Object.keys(newErrors).length === 0) {
+  //     // Submit the form (e.g., make API call)
+  //     setValidated(true);
+  //     console.log('Form submitted successfully');
+  //   } else {
+  //     setValidated(false);
+  //     setErrors(newErrors);
+  //   }
+  // };
 
   const validateForm = () => {
     const newErrors = {};
@@ -57,7 +63,7 @@ function Login() {
               {/* <img src={logo} style={{ width: '185px' }} alt="logo" /> */}
               <h4 className=" mb-5 pb-1">Se connecter</h4>
             </div>
-            <Form noValidate validated={validated} onSubmit={handleSubmit} className='py-5 px-4'>
+            <Form  onSubmit={handleSubmit} className='py-5 px-4'>
               <Form.Group className="mb-4 " controlId="formEmail">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
@@ -83,7 +89,12 @@ function Login() {
                 </Form.Control.Feedback>
               </Form.Group>
               <div className="text-center pt-1 mb-5 pb-1">
-                <Button style={{ backgroundColor: '#1F4B43', color: 'white' }} className="mb-4 w-100" variant="primary" type="submit">
+                <Button style={{ backgroundColor: '#1F4B43', color: 'white' }} className="mb-4 w-100" variant="primary" type="submit" onSubmit={(e)=>{
+                  e.preventDefault()
+                  login({email, password})
+                }
+
+                }>
                   Connecter
                 </Button>
                 <a className="text-muted" href="#!">Mot de passe oublié?</a>

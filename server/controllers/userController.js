@@ -23,15 +23,26 @@ export const getUserById = async (req, res) => {
     }
 }
 
-export const creatUser = async (req, res) => {
+export const createUser = async (req, res) => {
     try {
-        const user = new User(req.body);
+        // Récupérer les données de la requête
+        const { password, ...otherDetails } = req.body;
+
+        // Hacher le mot de passe
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Créer un nouvel utilisateur avec le mot de passe haché
+        const user = new User({ ...otherDetails, password: hashedPassword });
+
+        // Sauvegarder l'utilisateur dans la base de données
         const savedUser = await user.save();
+
+        // Répondre avec l'utilisateur sauvegardé
         res.status(201).json(savedUser);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
 
 export const deleteUser = async (req, res) => {
     try {

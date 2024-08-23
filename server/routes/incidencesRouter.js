@@ -1,13 +1,14 @@
 import express from 'express';
-import { creatIncidence, deleteIncidence, getALLIncidences, getIncidenceById } from '../controllers/incidenceController.js';
+import { creatIncidence, deleteIncidence, getALLIncidences, getIncidenceById, updateIncidence } from '../controllers/incidenceController.js';
 
 
 
 const router = express.Router()
 
 router.get('/getincidence', getALLIncidences);
-router.get('/getincidence/:id', getIncidenceById);
+router.get('/oneincidence/:id', getIncidenceById);
 router.post('/addincidence', creatIncidence);
+router.put('/updateincidence/:id', updateIncidence);
 router.delete('/deleteincidence/:id', deleteIncidence);
 
 export default router;

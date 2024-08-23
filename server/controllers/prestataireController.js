@@ -32,6 +32,18 @@ export const creatPrestaire = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+export const updatePrestataire = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedPrestataire = await Incidence.findByIdAndUpdate(id, req.body);
+        if (!updatedPrestataire) {
+            return res.status(404).json({ error: 'Prestataire not found' });
+        }
+        res.status(200).json(updatedPrestataire);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
 export const deletePrestataire = async (req, res) => {
     try {

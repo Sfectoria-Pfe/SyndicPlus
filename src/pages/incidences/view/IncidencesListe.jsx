@@ -124,7 +124,7 @@ export default function IncidenceListe() {
           <GridActionsCellItem
             icon={<EditIcon />}  
             label="Edit"
-            onClick={() => navigate("/incidences/editincidence")}
+            onClick={() => navigate(`/incidences/editincidence/${id}`)}
             color="inherit"
           />,
           <GridActionsCellItem

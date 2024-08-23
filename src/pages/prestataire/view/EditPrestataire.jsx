@@ -1,8 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function EditPrestataire() {
+  const { id } = useParams();
+  const [incidence, setIncidence] = useState({
+    name: '',
+    email: '',
+    travail: '',
+    description: '',
+    telephone: '',
+    avatar:''
+  });
+
+  useEffect(() => {
+    const fetchIncidenceData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:9000/prestataire/getprestataire/${id}`);
+        const { name,email,travail,description,telephone,avatar} = response.data;
+        setIncidence({
+          name: name || '',
+            email: email ||'',
+            travail: travail || '',
+            description: description || '',
+            telephone: telephone || '',
+            avatar: avatar || ''
+        });
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchIncidenceData();
+  }, [id]);
+
+
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setIncidence({ ...incidence, [name]: value });
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:9000/prestataire/updateprestataire/${id}`, incidence);
+      alert('Incidence modifiée avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la modification de l\'incidence:', error);
+    }
+  };
+
   return (
     <Wrapper>
     <Container>
@@ -10,21 +62,26 @@ function EditPrestataire() {
         <h1 className="font40 extraBold">Modifier Prestataire</h1>
       </HeaderInfo>
       <FormWrapper>
-        <Form>
+        <Form onSubmit={handleSubmit}>
         <label className="font13 " style={{fontFamily:"bold"}}>Nom:</label>
-          <input type="text" id="nom" name="nom" className="font20 " />
+          <input type="text" id="nom" name="nom" className="font20 " value={incidence.nbredeEtage} 
+              onChange={handleChange} />
           <label className="font13" style={{fontFamily:"bold"}}>Email:</label>
-          <input type="text" id="email" name="email" className="font20 " />
+          <input type="text" id="email" name="email" className="font20 " value={incidence.nbredeEtage} 
+              onChange={handleChange}  />
           <label className="font13" style={{fontFamily:"bold"}}>Travail:</label>
-          <input type="text" id="subject" name="sujet" className="font20 " />
+          <input type="text" id="subject" name="sujet" className="font20 " value={incidence.nbredeEtage} 
+              onChange={handleChange} />
           <label className="font13" style={{fontFamily:"bold"}}>Télèphone:</label>
-          <input type="number" id="subject" name="sujet" className="font20 " />
+          <input type="number" id="subject" name="sujet" className="font20 "value={incidence.nbredeEtage} 
+              onChange={handleChange}  />
           <label className="font13" style={{fontFamily:"bold"}}>Description:</label>
-          <textarea  type="text" id="description" name="description" className="font20 " />
-          <label className="font13" style={{fontFamily:"bold"}}>CV:</label>
-          <input   type="file" id="description" name="description" className="font20 " />
+          <textarea  type="text" id="description" name="description" className="font20 " value={incidence.nbredeEtage} 
+              onChange={handleChange} />
+          {/* <label className="font13" style={{fontFamily:"bold"}}>CV:</label>
+          <input   type="file" id="description" name="description" className="font20 " /> */}
           <SumbitWrapper>
-            <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor:"#1F4B43" }}>
+            <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor:"#1F4B43" }} onClick={handleSubmit}>
              Modifier
             </Button>
           </SumbitWrapper>
