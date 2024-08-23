@@ -21,7 +21,6 @@ function AddLocataire() {
   const preset_key = "fh9al9ga";
   const cloud_name = "dxhz5fyrw";
 
-
   const handleFile = (e) => {
     const file = e.target.files[0]
     const formData = new FormData();
@@ -67,11 +66,10 @@ function AddLocataire() {
           <Form onSubmit={handleSubmit}>
             <ImageSection>
               <ImageWrapper>
-              <input
-              type="file"
-              onChange={handleFile}
-            />
-            
+                <input
+                  type="file"
+                  onChange={handleFile}
+                />
                 <img
                   src={newLocataire.avatar}
                   alt=''
@@ -117,11 +115,11 @@ function AddLocataire() {
               <label className="font13">Status:</label>
               <input type="text" name="status" className="font20" onChange={handleChange} />
             </InputWrapper>
-            {/* <SumbitWrapper>
+            <SubmitWrapper>
               <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }} onClick={handleSubmit}>
                 Ajouter
               </Button>
-            </SubmitWrapper> */}
+            </SubmitWrapper>
           </Form>
         </FormWrapper>
       </Container>
@@ -137,7 +135,6 @@ const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  // background-color: #f5f5f5; /* Vous pouvez changer la couleur de fond si nécessaire */
 `;
 
 const Container = styled.div`
@@ -171,8 +168,6 @@ const Form = styled.form`
   textarea {
     min-height: 100px;
   }
-
-
 `;
 
 const SubmitWrapper = styled.div`
@@ -190,21 +185,19 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 80px;
   height: 80px;
-  margin-right: 20px; /* Espacement entre l'image et les champs de texte */
+  margin-right: 20px;
 
  .photo-icon {
     position: absolute;
     top: 80%;
     left: 90%;
     transform: translate(-50%, -50%);
-    font-size: 80px; /* Ajustez la taille de l'icône si nécessaire */
-    color: #fff; /* Couleur de l'icône, ajustez si nécessaire */
-    background-color: rgba(0, 0, 0, 0.5); /* Optionnel: couleur de fond semi-transparente pour l'icône */
+    font-size: 80px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
-    padding: 5px; /* Ajustez le padding pour que l'icône soit bien positionnée */
+    padding: 5px;
   }
-
-
 `;
 
 const InputWrapper = styled.div`
@@ -219,7 +212,7 @@ const InputWrapper = styled.div`
     box-shadow: none;
     border-bottom: 1px solid #707070;
     height: 30px;
-    margin-bottom: 20px; /* Espacement entre les champs */
+    margin-bottom: 20px;
   }
 
   textarea {

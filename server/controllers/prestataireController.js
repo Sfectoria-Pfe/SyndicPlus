@@ -35,7 +35,7 @@ export const creatPrestaire = async (req, res) => {
 export const updatePrestataire = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatedPrestataire = await Incidence.findByIdAndUpdate(id, req.body);
+        const updatedPrestataire = await Prestataire.findByIdAndUpdate(id, req.body);
         if (!updatedPrestataire) {
             return res.status(404).json({ error: 'Prestataire not found' });
         }

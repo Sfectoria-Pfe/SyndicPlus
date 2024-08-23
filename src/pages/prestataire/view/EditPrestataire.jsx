@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 function EditPrestataire() {
   const { id } = useParams();
-  const [incidence, setIncidence] = useState({
+  const [prestataire, setPrestataire] = useState({
     name: '',
     email: '',
     travail: '',
@@ -16,96 +16,142 @@ function EditPrestataire() {
   });
 
   useEffect(() => {
-    const fetchIncidenceData = async () => {
+    const fetchPrestataireData = async () => {
       try {
         const response = await axios.get(`http://localhost:9000/prestataire/getprestataire/${id}`);
-        const { name,email,travail,description,telephone,avatar} = response.data;
-        setIncidence({
+        const { name, email, travail, description, telephone, avatar } = response.data;
+        setPrestataire({
           name: name || '',
-            email: email ||'',
-            travail: travail || '',
-            description: description || '',
-            telephone: telephone || '',
-            avatar: avatar || ''
+          email: email || '',
+          travail: travail || '',
+          description: description || '',
+          telephone: telephone || '',
+          avatar: avatar || ''
         });
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Error fetching prestataire data:', error);
       }
     };
 
-    fetchIncidenceData();
+    fetchPrestataireData();
   }, [id]);
-
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setIncidence({ ...incidence, [name]: value });
+    setPrestataire({ ...prestataire, [name]: value });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:9000/prestataire/updateprestataire/${id}`, incidence);
-      alert('Incidence modifiée avec succès');
+      await axios.put(`http://localhost:9000/prestataire/updateprestataire/${id}`, prestataire);
+      alert('Prestataire modifié avec succès');
     } catch (error) {
-      console.error('Erreur lors de la modification de l\'incidence:', error);
+      console.error('Erreur lors de la modification de prestataire:', error);
     }
   };
 
   return (
     <Wrapper>
-    <Container>
-      <HeaderInfo>
-        <h1 className="font40 extraBold">Modifier Prestataire</h1>
-      </HeaderInfo>
-      <FormWrapper>
-        <Form onSubmit={handleSubmit}>
-        <label className="font13 " style={{fontFamily:"bold"}}>Nom:</label>
-          <input type="text" id="nom" name="nom" className="font20 " value={incidence.nbredeEtage} 
-              onChange={handleChange} />
-          <label className="font13" style={{fontFamily:"bold"}}>Email:</label>
-          <input type="text" id="email" name="email" className="font20 " value={incidence.nbredeEtage} 
-              onChange={handleChange}  />
-          <label className="font13" style={{fontFamily:"bold"}}>Travail:</label>
-          <input type="text" id="subject" name="sujet" className="font20 " value={incidence.nbredeEtage} 
-              onChange={handleChange} />
-          <label className="font13" style={{fontFamily:"bold"}}>Télèphone:</label>
-          <input type="number" id="subject" name="sujet" className="font20 "value={incidence.nbredeEtage} 
-              onChange={handleChange}  />
-          <label className="font13" style={{fontFamily:"bold"}}>Description:</label>
-          <textarea  type="text" id="description" name="description" className="font20 " value={incidence.nbredeEtage} 
-              onChange={handleChange} />
-          {/* <label className="font13" style={{fontFamily:"bold"}}>CV:</label>
-          <input   type="file" id="description" name="description" className="font20 " /> */}
-          <SumbitWrapper>
-            <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor:"#1F4B43" }} onClick={handleSubmit}>
-             Modifier
-            </Button>
-          </SumbitWrapper>
-        </Form>
-      </FormWrapper>
-    </Container>
-  </Wrapper>
-  )
+      <Container>
+        <HeaderInfo>
+          <h1 className="font40 extraBold">Modifier Prestataire</h1>
+        </HeaderInfo>
+        <FormWrapper>
+          <Form onSubmit={handleSubmit}>
+            <ImageSection>
+              <ImageWrapper>
+                <img
+                  src={prestataire.avatar}
+                  alt=""
+                  style={{
+                    width: '130px',
+                    height: '130px',
+                    borderRadius: '20%',
+                    objectFit: 'cover',
+                    border: '1px solid #1F4B43',
+                    marginLeft: "10px",
+                    marginTop:"-20px"
+                  }}
+                />
+              </ImageWrapper>
+            </ImageSection>
+            <label className="font13 " style={{ fontFamily: "bold" }}>Nom:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className="font20"
+              value={prestataire.name}
+              onChange={handleChange}
+            />
+            <label className="font13" style={{ fontFamily: "bold" }}>Email:</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              className="font20"
+              value={prestataire.email}
+              onChange={handleChange}
+            />
+            <label className="font13" style={{ fontFamily: "bold" }}>Travail:</label>
+            <input
+              type="text"
+              id="travail"
+              name="travail"
+              className="font20"
+              value={prestataire.travail}
+              onChange={handleChange}
+            />
+            <label className="font13" style={{ fontFamily: "bold" }}>Téléphone:</label>
+            <input
+              type="number"
+              id="telephone"
+              name="telephone"
+              className="font20"
+              value={prestataire.telephone}
+              onChange={handleChange}
+            />
+            <label className="font13" style={{ fontFamily: "bold" }}>Description:</label>
+            <textarea
+              id="description"
+              name="description"
+              className="font20"
+              value={prestataire.description}
+              onChange={handleChange}
+            />
+            <SumbitWrapper>
+              <Button
+                variant="primary"
+                type="submit"
+                className="animate radius8"
+                style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }}
+                onClick={handleSubmit}
+              >
+                Modifier
+              </Button>
+            </SumbitWrapper>
+          </Form>
+        </FormWrapper>
+      </Container>
+    </Wrapper>
+  );
 }
 
 export default EditPrestataire;
 
 const Wrapper = styled.section`
   width: 100%;
-  height: 100vh; /* Utiliser la hauteur de la fenêtre */
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5; /* Vous pouvez changer la couleur de fond si nécessaire */
+  // background-color: #f5f5f5;
 `;
 
 const Container = styled.div`
   width: 100%;
-  max-width: 800px; /* Largeur maximale du conteneur pour le formulaire */
+  max-width: 800px;
 `;
 
 const HeaderInfo = styled.div`
@@ -129,7 +175,7 @@ const Form = styled.form`
   textarea {
     width: 100%;
     background-color: transparent;
-    border: 0px;
+    border: 0;
     outline: none;
     box-shadow: none;
     border-bottom: 1px solid #707070;
@@ -146,4 +192,15 @@ const SumbitWrapper = styled.div`
   justify-content: center;
 `;
 
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+`;
 
+const ImageSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+`;
