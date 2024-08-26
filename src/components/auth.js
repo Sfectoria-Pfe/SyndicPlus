@@ -7,7 +7,7 @@ const auth = async (email, password) => {
 
         // Stocker le token JWT dans le localStorage
         localStorage.setItem('token', token);
-        
+
 
         // Optionnel : rediriger l'utilisateur vers une page protégée
         window.location.href = '/';

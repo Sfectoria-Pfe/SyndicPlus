@@ -23,8 +23,8 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   await auth(email, password);
-};
+    await auth(email, password);
+  };
 
 
 
@@ -68,14 +68,14 @@ function Login() {
               {/* <img src={logo} style={{ width: '185px' }} alt="logo" /> */}
               <h4 className=" mb-5 pb-1">Se connecter</h4>
             </div>
-            <Form  onSubmit={handleSubmit} className='py-5 px-4'>
+            <Form onSubmit={handleSubmit} className='py-5 px-4'>
               <Form.Group className="mb-4 " controlId="formEmail">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  // isInvalid={!!errors.email}
+                // isInvalid={!!errors.email}
                 />
                 <Form.Control.Feedback type="invalid">
                   {/* {errors.email} */}
@@ -87,16 +87,16 @@ function Login() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  // isInvalid={!!errors.password}
+                // isInvalid={!!errors.password}
                 />
                 <Form.Control.Feedback type="invalid">
                   {/* {errors.password} */}
                 </Form.Control.Feedback>
               </Form.Group>
               <div className="text-center pt-1 mb-5 pb-1">
-                <Button style={{ backgroundColor: '#1F4B43', color: 'white' }} className="mb-4 w-100" variant="primary" type="submit"  onSubmit={(e) => {
-                    e.preventDefault()
-                    auth({ email, password });
+                <Button style={{ backgroundColor: '#1F4B43', color: 'white' }} className="mb-4 w-100" variant="primary" type="submit" onSubmit={(e) => {
+                  e.preventDefault()
+                  auth({ email, password });
                 }}>
                   Connecter
                 </Button>

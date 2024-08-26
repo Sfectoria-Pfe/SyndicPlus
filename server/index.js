@@ -56,7 +56,7 @@ app.post('/login', async (req, res) => {
 
     try {
         // Rechercher l'utilisateur par email
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(401).json({
