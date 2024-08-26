@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaCloudUploadAlt } from "react-icons/fa";
 
 function AddLocataire() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [newLocataire, setNewLocataire] = useState({
     avatar: '',
     name: '',
@@ -16,45 +16,45 @@ function AddLocataire() {
     nbredeEtage: '',
     telephone: '',
     status: ''
-  })
+  });
 
   const preset_key = "fh9al9ga";
   const cloud_name = "dxhz5fyrw";
 
   const handleFile = (e) => {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
     const formData = new FormData();
-    formData.append('file', file)
+    formData.append('file', file);
     formData.append("upload_preset", preset_key);
     axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData).then((response) => {
-      console.log("uploded image url:", response.data.secure_url)
-      setNewLocataire((prevLocataire) => {
-        return { ...prevLocataire, avatar: response.data.secure_url }
-      })
-    })
-      .catch((err) => console.log(err))
-  }
+      setNewLocataire((prevLocataire) => ({
+        ...prevLocataire,
+        avatar: response.data.secure_url
+      }));
+    }).catch((err) => console.log(err));
+  };
 
   const addLocataire = async (body) => {
     try {
-      const response = await axios.post("http://localhost:9000/locataire/addlocataire", body)
-      return response
+      const response = await axios.post("http://localhost:9000/locataire/addlocataire", body);
+      return response;
     } catch (error) {
-      console.log(error)
-      return { error: true }
+      console.log(error);
+      return { error: true };
     }
-  }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewLocataire({ ...newLocataire, [name]: value })
-  }
+    setNewLocataire({ ...newLocataire, [name]: value });
+  };
+
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     addLocataire(newLocataire).then((response) => {
-      if (!response.error) navigate(-1)
-    })
-  }
+      if (!response.error) navigate(-1);
+    });
+  };
 
   return (
     <Wrapper>
@@ -66,12 +66,8 @@ function AddLocataire() {
           <Form onSubmit={handleSubmit}>
             <ImageSection>
               <ImageWrapper>
-                <input
-                  type="file"
-                  onChange={handleFile}
-                />
                 <img
-                  src={newLocataire.avatar}
+                  src={newLocataire.avatar || 'placeholder.png'}
                   alt=''
                   style={{
                     width: '130px',
@@ -97,7 +93,7 @@ function AddLocataire() {
                 )}
               </ImageWrapper>
               <InputWrapper>
-                <label className="font13" style={{ fontFamily: "bold", marginLeft: "90px", marginTop: "40px" }}>Nom Complete:</label>
+                <label className="font13" style={{ fontFamily: "bold", marginLeft: "90px", marginTop: "40px" }}>Nom Complet:</label>
                 <input type="text" name="name" className="font20" style={{ marginLeft: "90px" }} onChange={handleChange} />
               </InputWrapper>
             </ImageSection>
@@ -110,13 +106,13 @@ function AddLocataire() {
               <input type="number" name="appartement" className="font20" onChange={handleChange} />
               <label className="font13">Nombre de l'étage:</label>
               <input type="number" name="nbredeEtage" className="font20" onChange={handleChange} />
-              <label className="font13">Télèphone:</label>
+              <label className="font13">Téléphone:</label>
               <input type="number" name="telephone" className="font20" onChange={handleChange} />
-              <label className="font13">Status:</label>
+              <label className="font13">Statut:</label>
               <input type="text" name="status" className="font20" onChange={handleChange} />
             </InputWrapper>
             <SubmitWrapper>
-              <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }} onClick={handleSubmit}>
+              <Button variant="primary" type="submit" className="animate radius8" style={{ maxWidth: "220px", backgroundColor: "#1F4B43" }}>
                 Ajouter
               </Button>
             </SubmitWrapper>
@@ -130,8 +126,8 @@ function AddLocataire() {
 export default AddLocataire;
 
 const Wrapper = styled.section`
-   width: 100%;
-  height: 100vh; /* Utiliser la hauteur de la fenêtre */
+  width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,11 +136,11 @@ const Wrapper = styled.section`
 const Container = styled.div`
   width: 100%;
   max-width: 800px; 
-  margin-top:100px;
+  margin-top: 100px;
 `;
 
 const HeaderInfo = styled.div`
- text-align: center;
+  text-align: center;
   padding-bottom: 30px;
 `;
 
@@ -154,17 +150,17 @@ const FormWrapper = styled.div`
 `;
 
 const Form = styled.form`
-   input,
-  textarea {
+  input, textarea {
     width: 100%;
     background-color: transparent;
-    border: 0px;
+    border: 0;
     outline: none;
     box-shadow: none;
     border-bottom: 1px solid #707070;
     height: 30px;
     margin-bottom: 30px;
   }
+
   textarea {
     min-height: 100px;
   }
@@ -176,35 +172,35 @@ const SubmitWrapper = styled.div`
 `;
 
 const ImageSection = styled.div`
-   display: flex;
+  display: flex;
   align-items: center;
   margin-bottom: 30px;
 `;
 
 const ImageWrapper = styled.div`
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 130px;
+  height: 130px;
   margin-right: 20px;
 
- .photo-icon {
+  .photo-icon {
     position: absolute;
-    top: 80%;
-    left: 90%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 80px;
+    font-size: 30px;
     color: #fff;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
     padding: 5px;
+    cursor: pointer;
   }
 `;
 
 const InputWrapper = styled.div`
   margin-bottom: 30px;
 
-  input,
-  textarea {
+  input, textarea {
     width: 100%;
     background-color: transparent;
     border: 0;
