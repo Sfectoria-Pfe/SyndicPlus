@@ -50,11 +50,6 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 
-
-
-
-
-
 // Login Route
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
@@ -79,7 +74,7 @@ app.post('/login', async (req, res) => {
 
             res.json({
                 success: true,
-                message: 'Authentication successful!',
+                message: 'Authentification successful!',
                 token: token,
             });
         } else {

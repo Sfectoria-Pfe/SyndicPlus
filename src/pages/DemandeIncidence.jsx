@@ -40,7 +40,7 @@ const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5; /* Vous pouvez changer la couleur de fond si nécessaire */
+  // background-color: #f5f5f5; /* Vous pouvez changer la couleur de fond si nécessaire */
 `;
 
 const Container = styled.div`

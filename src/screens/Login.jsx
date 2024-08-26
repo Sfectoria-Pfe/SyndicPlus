@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 // import logo from '../assets/img/Logo.png';
 import batiment from '../assets/img/header.png';
 import 'aos/dist/aos.css';
@@ -28,8 +28,8 @@ function Login() {
 
 
 
-  const [errors, setErrors] = useState({});
-  const [validated, setValidated] = useState(false);
+  // const [errors, setErrors] = useState({});
+  // const [validated, setValidated] = useState(false);
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -44,20 +44,20 @@ function Login() {
   //   }
   // };
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!email) {
-      newErrors.email = 'Email est requis';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email n\'est pas valide';
-    }
-    if (!password) {
-      newErrors.password = 'Mot de passe est requis';
-    } else if (password.length < 6) {
-      newErrors.password = 'Mot de passe doit contenir au moins 6 caractères';
-    }
-    return newErrors;
-  };
+  // const validateForm = () => {
+  //   const newErrors = {};
+  //   if (!email) {
+  //     newErrors.email = 'Email est requis';
+  //   } else if (!/\S+@\S+\.\S+/.test(email)) {
+  //     newErrors.email = 'Email n\'est pas valide';
+  //   }
+  //   if (!password) {
+  //     newErrors.password = 'Mot de passe est requis';
+  //   } else if (password.length < 6) {
+  //     newErrors.password = 'Mot de passe doit contenir au moins 6 caractères';
+  //   }
+  //   return newErrors;
+  // };
 
   return (
     <Container className="my-5 gradient-form">
@@ -75,10 +75,10 @@ function Login() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  isInvalid={!!errors.email}
+                  // isInvalid={!!errors.email}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.email}
+                  {/* {errors.email} */}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mb-4" controlId="formPassword">
@@ -87,10 +87,10 @@ function Login() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  isInvalid={!!errors.password}
+                  // isInvalid={!!errors.password}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.password}
+                  {/* {errors.password} */}
                 </Form.Control.Feedback>
               </Form.Group>
               <div className="text-center pt-1 mb-5 pb-1">
@@ -103,11 +103,11 @@ function Login() {
                 <a className="text-muted" href="#!">Mot de passe oublié?</a>
               </div>
             </Form>
-            {validated && (
+            {/* {validated && (
               <Alert variant="success">
                 Connexion réussie!
               </Alert>
-            )}
+            )} */}
           </div>
         </Col>
         <Col md={6} className="mb-5" style={{
