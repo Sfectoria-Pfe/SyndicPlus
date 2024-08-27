@@ -27,7 +27,7 @@ export default function DemandeListe() {
 
   const getDemandePrestataire = async () => {
     try {
-      let response = await axios.get("http://localhost:9000/prestataire/getprestataire")
+      let response = await axios.get("http://localhost:9000/demandePrestataire/getdemandeprestataire")
       const dataWithId = response.data.map((item, index) => ({
         ...item,
         id: item._id
@@ -57,6 +57,32 @@ export default function DemandeListe() {
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
+
+
+  const handleAccept = async (id) => {
+    console.log("ID de la demande acceptée :", id); // Ajoutez ce log pour vérifier l'`id`
+    try {
+      const response = await axios.post(`http://localhost:9000/demandePrestataire/acceptdemandeprestataire/${id}`);
+      if (response.status === 200) {
+        showSuccess();
+        setRows(rows.map((row) => (row.id === id ? { ...row, status: 'accepted' } : row)));
+      } else {
+        toast.error('Erreur lors de l\'acceptation de la demande');
+      }
+    } catch (error) {
+      toast.error(`Erreur: ${error.response ? error.response.data.message : error.message}`);
+    }
+  };
+  
+  const handleReject = async (id) => {
+    try {
+      await axios.put(`http://localhost:9000/demandePrestataire/refusedemandeprestataire/${id}`);
+      showReject();
+      setRows(rows.map((row) => (row.id === id ? { ...row, status: 'refused' } : row)));
+    } catch (error) {
+      toast.error('Erreur lors du rejet de la demande');
+    }
+  };  
 
   const columns = [
     {
@@ -106,6 +132,13 @@ export default function DemandeListe() {
       editable: true,
     },
     {
+      field: 'cv',
+      headerName: 'cv',
+      width: 220,
+      editable: true,
+      type: 'singleSelect',
+    },
+    {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
@@ -122,13 +155,13 @@ export default function DemandeListe() {
           <GridActionsCellItem
             icon={<CheckIcon />}
             label="Success"
-            onClick={showSuccess}
+            onClick={() => handleAccept(id)}
             color="inherit"
           />,
           <GridActionsCellItem
             icon={<CloseIcon />}
             label="Reject"
-            onClick={showReject}
+            onClick={() => handleReject(id)}
             color="inherit"
           />,
         ];

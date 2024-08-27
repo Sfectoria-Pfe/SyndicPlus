@@ -29,7 +29,6 @@ export const userContent = [
     }
 ]
 
-
 export const locataireContent = [
     {
         name: "moheb ben salah",
@@ -165,6 +164,45 @@ export const prestataireContent = [
         travail: "infirmier",
         description: "je suis disponible à tout moment",
         telephone: 247896215,
+        avatar: "https://th.bing.com/th/id/OIP.oZckFBG0wNM68yJS7v1iGAHaE8?w=297&h=198&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+    }
+]
+
+export const demandePrestataireContent = [
+    {  
+        name: "hatem ben azzouna",
+        email: "hatemBenAZZ66@gmail.com",
+        travail: "plombier",
+        description: "je suis profesionnel dans mon travail",
+        telephone: 26631478,
+        cv:"https://emploietformation.com/wp-content/uploads/2021/01/PAGE1-min-6-1086x1536.jpg",
+        avatar: "https://th.bing.com/th/id/OIP.SzM72kOHCjb9kqAUqyhp-gHaFA?rs=1&pid=ImgDetMain",
+    },
+    {
+        name: "moheb hmida",
+        email: "MohebHM@gmail.com",
+        travail: "pharmacien",
+        description: "mon pharmacie est presque a coté du batiment dans le rue du de marseille",
+        telephone: 99515222,
+        cv:"https://th.bing.com/th/id/R.07b8a02fc3c9882c261d1680588a2fad?rik=kwDS7dd8XfgoOA&pid=ImgRaw&r=0",
+        avatar: "https://sante-pratique-paris.fr/wp-content/uploads/2015/07/2.jpg",
+    },
+    {
+        name: "saloua khlil",
+        email: "salouaKH123@gmail.com",
+        travail: "infirmier",
+        description: "je suis disponible à tout moment",
+        telephone: 24111478, 
+        cv:"https://media.mycvfactory.com/images/Resume_Template_76.original.jpg",
+        avatar: "https://th.bing.com/th/id/OIP.cX_N5MmvLaaZsluT-ngc3gHaEy?rs=1&pid=ImgDetMain",
+    },
+    {
+        name: "khaled meryeh",
+        email: "khaledMR55@gmail.com",
+        travail: "élèctricien",
+        description: "je suis professionnel a mon travail",
+        telephone: 247896215,
+        cv:"https://i.pinimg.com/originals/f2/3c/de/f23cde5228fde2562cd4a11e96b6052b.jpg",
         avatar: "https://th.bing.com/th/id/OIP.oZckFBG0wNM68yJS7v1iGAHaE8?w=297&h=198&c=7&r=0&o=5&dpr=1.3&pid=1.7",
     }
 ]

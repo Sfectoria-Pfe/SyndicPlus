@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import { IoArchiveOutline } from "react-icons/io5";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
@@ -59,7 +59,7 @@ export default function LocataireListe() {
   };
 
   const showDeleteToast = () => {
-    toast.success('Locataire supprimé avec succès!');
+    toast.success('Locataire archiver!');
   };
 
   const handleDeleteClick = (id) => () => {
@@ -146,8 +146,8 @@ export default function LocataireListe() {
           color="inherit"
         />,
         <GridActionsCellItem
-          icon={<DeleteIcon />}
-          label="Delete"
+          icon={<IoArchiveOutline />}
+          label="Archive"
           onClick={handleDeleteClick(id)}
           color="inherit"
         />,

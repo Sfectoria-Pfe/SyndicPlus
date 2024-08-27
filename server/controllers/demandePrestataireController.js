@@ -1,7 +1,7 @@
-import Prestataire from '../models/prestataire.js';
+import Prestataire from '../models/demandePrestataire.js';
 
-
-export const getALLPrestataire = async (request, response) => {
+// Obtenir tous les prestataires
+export const getALLdemandePrestataire = async (request, response) => {
     try {
         const prestataire = await Prestataire.find();
         response.status(200).json(prestataire);
@@ -10,20 +10,20 @@ export const getALLPrestataire = async (request, response) => {
     }
 }
 
-export const getPrestataireById = async (req, res) => {
+// Obtenir un prestataire par ID
+export const getdemandePrestataireById = async (req, res) => {
     try {
-        const { id } = req.params
+        const { id } = req.params;
         const prestataire = await Prestataire.findById(id);
         if (!prestataire) {
-            return res.status(404).json({ error: 'prestataire not found' });
+            return res.status(404).json({ error: 'Prestataire not found' });
         }
         res.status(200).json(prestataire);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
-
-export const createPrestaire = async (req, res) => {
+export const createDemandePrestaire = async (req, res) => {
     try {
         const prestataire = new Prestataire(req.body);
         const savedPrestataire = await prestataire.save();
@@ -32,10 +32,11 @@ export const createPrestaire = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-export const updatePrestataire = async (req, res) => {
+// Accepter un prestataire par ID
+export const acceptPrestataire = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatedPrestataire = await Prestataire.findByIdAndUpdate(id, req.body);
+        const updatedPrestataire = await Prestataire.findByIdAndUpdate(id, { status: 'accepted' }, { new: true });
         if (!updatedPrestataire) {
             return res.status(404).json({ error: 'Prestataire not found' });
         }
@@ -45,14 +46,15 @@ export const updatePrestataire = async (req, res) => {
     }
 }
 
-export const deletePrestataire = async (req, res) => {
+// Refuser un prestataire par ID
+export const refusePrestataire = async (req, res) => {
     try {
         const { id } = req.params;
-        const deletedPrestataire = await Prestataire.findByIdAndDelete(id);
-        if (!deletedPrestataire) {
-
-            return res.status(404).json({ error: 'prestataire not found' });
+        const updatedPrestataire = await Prestataire.findByIdAndUpdate(id, { status: 'refused' }, { new: true });
+        if (!updatedPrestataire) {
+            return res.status(404).json({ error: 'Prestataire not found' });
         }
+        res.status(200).json(updatedPrestataire);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

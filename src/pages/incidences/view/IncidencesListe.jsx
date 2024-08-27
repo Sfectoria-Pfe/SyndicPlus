@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import { IoArchiveOutline } from "react-icons/io5";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
@@ -65,7 +65,7 @@ export default function IncidenceListe() {
   };
 
   const showDeleteToast = () => {
-    toast.success('Incidente supprimé!');
+    toast.success('Incidente archiver!');
   };
 
   const handleDeleteClick = (id) => () => {
@@ -134,8 +134,8 @@ export default function IncidenceListe() {
             color="inherit"
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
+            icon={<IoArchiveOutline />}
+            label="Archive"
            onClick={handleDeleteClick(id)}
             color="inherit"
           />,

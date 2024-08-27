@@ -8,6 +8,7 @@ import locataireRoutes from './routes/locataireRoutes.js';
 import paiementRoutes from './routes/locataireRoutes.js';
 import proprietaireRoutes from './routes/proprietaireRoutes.js';
 import syndicRoutes from './routes/syndicRoutes.js';
+import demandePrestatiareRoutes from './routes/demandePrestataireRouter.js';
 import cors from "cors"
 import generateToken from './jwtUtils.js';
 import bodyParser from 'body-parser';
@@ -108,6 +109,7 @@ app.use('/locataire', locataireRoutes);
 app.use('/paiement', paiementRoutes);
 app.use('/proprietaire', proprietaireRoutes);
 app.use('/syndic', syndicRoutes);
+app.use('/demandePrestataire', demandePrestatiareRoutes);
 
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`)

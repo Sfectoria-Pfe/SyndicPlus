@@ -13,7 +13,7 @@ function IncidenceDetaille() {
 
   const getIncidence = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:9000/incidence/getincidence/${id}`);
+      const response = await axios.get(`http://localhost:9000/incidence/oneincidence/${id}`);
       console.log(response.data, "incidence infos");
       setIncidence(response.data);
     } catch (error) {

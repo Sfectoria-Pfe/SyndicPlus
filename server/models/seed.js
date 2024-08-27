@@ -1,5 +1,6 @@
 import User from "./user.js";
 import {
+    demandePrestataireContent,
     incidenceContent,
     locataireContent,
     paiementContent,
@@ -14,6 +15,7 @@ import Proprietaire from "./proprietaire.js";
 import Incidence from "./incidence.js";
 import Syndic from "./syndic.js";
 import Prestataire from "./prestataire.js";
+import DemandePrestataire from "./demandePrestataire.js";
 import Paiement from "./paiementenligne.js";
 import bcrypt from "bcrypt";
 
@@ -78,6 +80,16 @@ const prestataire = async () => {
     }
 }
 prestataire();
+
+const demandePrestataire = async () => {
+    try {
+        await DemandePrestataire.insertMany(demandePrestataireContent),
+            console.log("demande prestataire seeded")
+    } catch (error) {
+        console.log(error)
+    }
+}
+demandePrestataire();
 
 const paiement = async () => {
     try {
