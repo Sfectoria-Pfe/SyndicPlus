@@ -92,6 +92,48 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.put('/updateme/:id', validateToken, async(req, res)=> {
+   const {id}= req.params
+   const userData = req.body;
+   try {
+    const user = await User.findById(id)
+    if(!user){
+      return  res.status(404).json({
+            message:'user not fond',
+        })
+    }
+   const {password,...updatedata}= userData
+   if(updatedata.email){
+    const existeUser = await User.findOne({email:updatedata.email,id:{$ne:id}})
+    if(existeUser){
+        return res.status(400).json({
+            message:'email is alredy taken'
+        })
+    }
+   } 
+
+ await User.findByIdAndUpdate(id, updatedata,{new:true})
+if(password){
+    const hashedPassword= await bcrypt.hash(password,10)
+    await User.findByIdAndUpdate(id,{password:hashedPassword })
+
+}
+const updatedUser = await User.findById(id)
+const token = generateToken(updatedUser)
+res.json({
+    message:'profile updated',
+    token:token
+})
+
+   } catch (error) {
+    console.log(error)
+    res.status(500).json({
+        message:'server error'
+    })
+   }
+})
+
+
 // Protected Route
 app.get('/me', validateToken, (req, res) => {
     res.json({

@@ -12,7 +12,7 @@ function AddIncidence() {
     name: '',
     nbredeEtage: '',
     descriptiondudegat: '',
-    status: ''
+    status: 'en attent'
   })
 
   const preset_key = "fh9al9ga";

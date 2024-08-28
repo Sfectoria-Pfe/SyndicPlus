@@ -201,7 +201,7 @@ export const demandePrestataireContent = [
         email: "khaledMR55@gmail.com",
         travail: "élèctricien",
         description: "je suis professionnel a mon travail",
-        telephone: 247896215,
+        telephone: 24789621,
         cv:"https://i.pinimg.com/originals/f2/3c/de/f23cde5228fde2562cd4a11e96b6052b.jpg",
         avatar: "https://th.bing.com/th/id/OIP.oZckFBG0wNM68yJS7v1iGAHaE8?w=297&h=198&c=7&r=0&o=5&dpr=1.3&pid=1.7",
     }

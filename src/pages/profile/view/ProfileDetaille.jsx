@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // reactstrap components
 import {
   Button,
@@ -14,10 +14,50 @@ import {
   Col,
 } from "reactstrap";
 import "../../../style/card.css"
-import Loc1 from '../../../assets/img/Locataire1.jpg';
+// import Loc1 from '../../../assets/img/Locataire1.jpg';
+import getMe from "../../../components/GetMe";
+import { updateProfil } from "../../../components/updateProfil";
+// import { useParams } from "react-router-dom";
 // import Batiment from '../../../assets/img/header.png';
 
 function ProfilDetaille() {
+// const {id}= useParams()
+  const [user, setuser] = useState(null)
+  const [updatedUser, setUserUpdated] = useState({
+    _id:"",
+    avatar: '',
+    name: '',
+    email: '',
+    password: '',
+    telephone: ''
+  })
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getMe()
+      if (userData) {
+        setuser(userData)
+        setUserUpdated(prev => ({ ...prev, ...userData}))
+      }
+    }
+    fetchUser()
+  }, [])
+  const handlechange = (e) => {
+    const { name, value } = e.target
+    setUserUpdated({ ...updatedUser, [name]: value })
+
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (user) {
+      setUserUpdated({...updatedUser,_id:user._id})
+      await updateProfil(updatedUser, user._id);
+    } else {
+      console.error("User data is not available.");
+    }
+  };
+console.log(updatedUser,"up");
+
   return (
     <section>
       <div className="content" >
@@ -30,15 +70,19 @@ function ProfilDetaille() {
               <CardBody>
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img
+                    {/* <img
                       alt="..."
                       className="avatar border-gray"
                       src={Loc1}
                       style={{ borderRadius: "50%" }}
-                    />
-                    <h5 className="title" style={{ color: "#1F4B43", fontWeight: 900, fontSize: "1.8rem" }}>Chet Faker</h5>
-                  </a>
-                  <p className="description" style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1.14rem" }}>@chetfaker</p>
+                    /> */}
+                   {user && (
+                      <>
+                        <h5 className="title" style={{ color: "#1F4B43", fontWeight: 900, fontSize: "1.8rem" }}>{user.name}</h5>
+                        <p className="description" style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1.14rem" }}>{user.email}</p>
+                      </>
+                    )}
+                     </a>
                 </div>
                 <p className="description text-center" style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1.14rem" }}>
                   "I like the way you work it <br />
@@ -49,19 +93,19 @@ function ProfilDetaille() {
                 <hr />
                 <div className="button-container">
                   <Row>
-                    <Col className="ml-auto" lg="3" md="6" xs="6" style={{color:"#1F4B43"}}>
+                    <Col className="ml-auto" lg="3" md="6" xs="6" style={{ color: "#1F4B43" }}>
                       <h5>
                         12 <br />
                         <small>Files</small>
                       </h5>
                     </Col>
-                    <Col className="ml-auto mr-auto" lg="4" md="6" xs="6" style={{color:"#1F4B43"}}>
+                    <Col className="ml-auto mr-auto" lg="4" md="6" xs="6" style={{ color: "#1F4B43" }}>
                       <h5>
                         2GB <br />
                         <small>Used</small>
                       </h5>
                     </Col>
-                    <Col className="mr-auto" lg="3" style={{color:"#1F4B43"}}>
+                    <Col className="mr-auto" lg="3" style={{ color: "#1F4B43" }}>
                       <h5>
                         24,6$ <br />
                         <small>Spent</small>
@@ -171,13 +215,13 @@ function ProfilDetaille() {
           <Col md="8">
             <Card className="card-user mt-4" >
               <CardHeader>
-                <CardTitle style={{ color: "#1F4B43", fontWeight: 400, fontSize: "1.25rem", fontFamily:"sans-serif",padding:"15px 15px 0" }} tag="h5">Modifier Profil</CardTitle>
+                <CardTitle style={{ color: "#1F4B43", fontWeight: 400, fontSize: "1.25rem", fontFamily: "sans-serif", padding: "15px 15px 0" }} tag="h5">Modifier Profil</CardTitle>
               </CardHeader>
               <CardBody>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                   <Row>
-                    <Col className="pr-1" md="5" style={{padding:'10px 10px 0'}}>
-                      <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" ,fontFamily:'Montserrat'}}>
+                    <Col className="pr-1" md="5" style={{ padding: '10px 10px 0' }}>
+                      <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem", fontFamily: 'Montserrat' }}>
                         <label>Company (disabled)</label>
                         <Input
                           defaultValue="Creative Code Inc."
@@ -188,28 +232,29 @@ function ProfilDetaille() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="px-1" md="3" style={{padding:'10px 10px 0'}}>
+                    <Col className="px-1" md="3" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Username</label>
                         <Input
-                          defaultValue="michael23"
+                          name="name"
                           placeholder="Username"
                           type="text"
                           style={{ color: "#9a9a9a" }}
+                          onChange={handlechange}
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-1" md="4" style={{padding:'10px 10px 0'}}>
+                    <Col className="pl-1" md="4" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label htmlFor="exampleInputEmail1">
                           Email address
                         </label>
-                        <Input placeholder="Email" type="email"  style={{ color: "#9a9a9a" }} />
+                        <Input placeholder="Email" type="email" name="email" style={{ color: "#9a9a9a" }} onChange={handlechange}/>
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="6" style={{padding:'10px 10px 0'}}>
+                    <Col className="pr-1" md="6" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>First Name</label>
                         <Input
@@ -220,7 +265,7 @@ function ProfilDetaille() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-1" md="6" style={{padding:'10px 10px 0'}}>
+                    <Col className="pl-1" md="6" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Last Name</label>
                         <Input
@@ -233,7 +278,7 @@ function ProfilDetaille() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12" style={{padding:'10px 10px 0'}}>
+                    <Col md="12" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Address</label>
                         <Input
@@ -246,7 +291,7 @@ function ProfilDetaille() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="4" style={{padding:'10px 10px 0'}}>
+                    <Col className="pr-1" md="4" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>City</label>
                         <Input
@@ -257,7 +302,7 @@ function ProfilDetaille() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="px-1" md="4" style={{padding:'10px 10px 0'}}>
+                    <Col className="px-1" md="4" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Country</label>
                         <Input
@@ -268,15 +313,15 @@ function ProfilDetaille() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-1" md="4" style={{padding:'10px 10px 0'}}>
+                    <Col className="pl-1" md="4" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Postal Code</label>
-                        <Input placeholder="ZIP Code" type="number"  style={{ color: "#9a9a9a" }} />
+                        <Input placeholder="ZIP Code" type="number" style={{ color: "#9a9a9a" }} />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12" style={{padding:'10px 10px 0'}}>
+                    <Col md="12" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>About Me</label>
                         <Input
@@ -288,19 +333,21 @@ function ProfilDetaille() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12" style={{padding:'10px 10px 0'}}>
+                    <Col md="12" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Mot de passe</label>
                         <Input
+                        name="password"
                           placeholder="Password"
                           type="Password"
                           style={{ color: "#9a9a9a" }}
+                          onChange={handlechange}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12" style={{padding:'10px 10px 0'}}>
+                    <Col md="12" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Confirme mot de passe</label>
                         <Input
@@ -312,13 +359,14 @@ function ProfilDetaille() {
                     </Col>
                   </Row>
                   <Row className="text-center">
-                    <Col md="12" style={{padding:'10px 10px 0'}}>
+                    <Col md="12" style={{ padding: '10px 10px 0' }}>
                       <div className="update">
                         <Button
                           className="btn-round"
                           color="primary"
-                          type="submit"
-                          style={{ backgroundColor: "#1F4B43", borderRadius:"25px", fontWeight:600 ,height:"45px" }}
+                        
+                          style={{ backgroundColor: "#1F4B43", borderRadius: "25px", fontWeight: 600, height: "45px" }}
+                          onClick={()=>(updateProfil(updatedUser))}
                         >
                           Modifier Profil
                         </Button>

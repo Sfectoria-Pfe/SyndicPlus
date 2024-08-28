@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function EditPrestataire() {
+  const navigate = useNavigate()
   const { id } = useParams();
   const [prestataire, setPrestataire] = useState({
     name: '',
@@ -45,7 +46,7 @@ function EditPrestataire() {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:9000/prestataire/updateprestataire/${id}`, prestataire);
-      alert('Prestataire modifié avec succès');
+      navigate(-1);
     } catch (error) {
       console.error('Erreur lors de la modification de prestataire:', error);
     }
