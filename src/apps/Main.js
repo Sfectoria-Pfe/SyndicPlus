@@ -20,7 +20,7 @@ import { TbLayoutDashboard } from "react-icons/tb";
 import { TbTablePlus } from "react-icons/tb";
 import { FaThList } from "react-icons/fa";
 import { RiSecurePaymentFill } from "react-icons/ri";
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineMessage } from "react-icons/md";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -29,6 +29,7 @@ import { FaBuildingUser } from "react-icons/fa6";
 // import Logo from '../assets/img/Logo.png';
 // import Image from 'react-bootstrap/Image';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -92,13 +93,35 @@ export default function Main() {
   const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(null);
+  const [user, setUser] = React.useState({ name: '', avatar: '' });
 
+  const {id}= useParams()
+
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`http://localhost:9000/users/getuser/${id}`);
+        setUser(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des informations utilisateur:', error);
+      }
+    };
+
+    fetchUser();
+  }, [id]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleListItemClick = (index, link) => {
+    setSelectedIndex(index);
+    navigate(link);
   };
 
   const DrawerHeader = styled('div')(({ theme }) => ({
@@ -126,6 +149,12 @@ export default function Main() {
           >
             <MenuIcon />
           </IconButton>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <img src={user?.avatar} alt="User Avatar" style={{ width: 40, height: 40, borderRadius: '50%', marginRight: 10 }} />
+            <Typography variant="h6" noWrap>
+              {user?.name}
+            </Typography>
+          </Box>
           {/* Conteneur des icônes aligné à droite */}
           <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
             <IconButton color="inherit">
@@ -142,44 +171,41 @@ export default function Main() {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', color:'#1F4B43' }}>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', color: '#1F4B43' }}>
             SyndicPlus
           </Typography>
-          {/* <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-            <Image
-              src={Logo}
-              alt="Logo"
-              width="80"
-              height="70"
-              className="d-inline-block align-top"
-            />
-          </Box> */}
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <FaChevronRight /> : <FaChevronLeft />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-          {[{ title: 'Dashboard', icon: <TbLayoutDashboard />, link: "/" }, { title: 'Demande incidence', icon: <TbTablePlus />, link: "/demandeIncidence" }, { title: 'Incidence', icon: <TiThListOutline />, link: "/incidences" }, { title: 'Prestataire', icon: <FaThList />, link: "/prestataire" }, { title: 'Demande Prestataire', icon: <FaThList />, link: "/DemandePrestataire" }, { title: 'Paiement en ligne', icon: <RiSecurePaymentFill />, link: "/paiement" }, { title: 'Locataire', icon: <FaBuildingUser />, link: "/locataire" }, { title: 'Proprietaire', icon: <FaBuildingUser />, link: "/proprietaire" }].map((text, index) => (
-            <ListItem key={text.title} disablePadding sx={{ display: 'block' }}>
+          {[{ title: 'Dashboard', icon: <TbLayoutDashboard />, link: "/" }, { title: 'Demande incidence', icon: <TbTablePlus />, link: "/demandeIncidence" }, { title: 'Incidence', icon: <TiThListOutline />, link: "/incidences" }, { title: 'Prestataire', icon: <FaThList />, link: "/prestataire" }, { title: 'Demande Prestataire', icon: <FaThList />, link: "/DemandePrestataire" }, { title: 'Paiement en ligne', icon: <RiSecurePaymentFill />, link: "/paiement" }, { title: 'Locataire', icon: <FaBuildingUser />, link: "/locataire" }, { title: 'Proprietaire', icon: <FaBuildingUser />, link: "/proprietaire" }].map((item, index) => (
+            <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
+                  backgroundColor: selectedIndex === index ? '#1F4B43' : 'inherit',
+
                 }}
-                onClick={() => navigate(`${text.link}`)}
+                onClick={() => handleListItemClick(index, item.link)}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
+                    color: selectedIndex === index ? '#FFFFFF' : 'inherit' 
                   }}
                 >
-                  {text.icon}
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text.title} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={item.title} sx={{
+                  opacity: open ? 1 : 0,
+                  color: selectedIndex === index ? '#FFFFFF' : 'inherit'
+                }} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -193,4 +219,3 @@ export default function Main() {
     </Box>
   );
 }
-
