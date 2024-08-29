@@ -94,7 +94,7 @@ export default function Main() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(null);
-  const [user, setUser] = React.useState({ name: '', avatar: '' });
+  const [user, setUser] = React.useState(null);
 
   const {id}= useParams()
 

@@ -21,10 +21,10 @@ import { updateProfil } from "../../../components/updateProfil";
 // import Batiment from '../../../assets/img/header.png';
 
 function ProfilDetaille() {
-// const {id}= useParams()
+  // const {id}= useParams()
   const [user, setuser] = useState(null)
   const [updatedUser, setUserUpdated] = useState({
-    _id:"",
+    _id: "",
     avatar: '',
     name: '',
     email: '',
@@ -37,7 +37,7 @@ function ProfilDetaille() {
       const userData = await getMe()
       if (userData) {
         setuser(userData)
-        setUserUpdated(prev => ({ ...prev, ...userData}))
+        setUserUpdated(prev => ({ ...prev, ...userData }))
       }
     }
     fetchUser()
@@ -50,13 +50,13 @@ function ProfilDetaille() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user) {
-      setUserUpdated({...updatedUser,_id:user._id})
+      setUserUpdated({ ...updatedUser, _id: user._id })
       await updateProfil(updatedUser, user._id);
     } else {
       console.error("User data is not available.");
     }
   };
-console.log(updatedUser,"up");
+  console.log(updatedUser, "up");
 
   return (
     <section>
@@ -73,16 +73,16 @@ console.log(updatedUser,"up");
                     {/* <img
                       alt="..."
                       className="avatar border-gray"
-                      src={Loc1}
+                      src={user.avatar}
                       style={{ borderRadius: "50%" }}
                     /> */}
-                   {user && (
+                    {user && (
                       <>
                         <h5 className="title" style={{ color: "#1F4B43", fontWeight: 900, fontSize: "1.8rem" }}>{user.name}</h5>
                         <p className="description" style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1.14rem" }}>{user.email}</p>
                       </>
                     )}
-                     </a>
+                  </a>
                 </div>
                 <p className="description text-center" style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1.14rem" }}>
                   "I like the way you work it <br />
@@ -220,7 +220,7 @@ console.log(updatedUser,"up");
               <CardBody>
                 <Form onSubmit={handleSubmit}>
                   <Row>
-                    <Col className="pr-1" md="5" style={{ padding: '10px 10px 0' }}>
+                    {/* <Col className="pr-1" md="5" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem", fontFamily: 'Montserrat' }}>
                         <label>Company (disabled)</label>
                         <Input
@@ -231,13 +231,13 @@ console.log(updatedUser,"up");
                           style={{ color: "#9a9a9a" }}
                         />
                       </FormGroup>
-                    </Col>
+                    </Col> */}
                     <Col className="px-1" md="3" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
-                        <label>Username</label>
+                        <label>Nom complet:</label>
                         <Input
                           name="name"
-                          placeholder="Username"
+                          placeholder="nom complet"
                           type="text"
                           style={{ color: "#9a9a9a" }}
                           onChange={handlechange}
@@ -247,87 +247,22 @@ console.log(updatedUser,"up");
                     <Col className="pl-1" md="4" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label htmlFor="exampleInputEmail1">
-                          Email address
+                          Email
                         </label>
-                        <Input placeholder="Email" type="email" name="email" style={{ color: "#9a9a9a" }} onChange={handlechange}/>
+                        <Input placeholder="Email" type="email" name="email" style={{ color: "#9a9a9a" }} onChange={handlechange} />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
                     <Col className="pr-1" md="6" style={{ padding: '10px 10px 0' }}>
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
-                        <label>First Name</label>
+                        <label>Télèphone:</label>
                         <Input
-                          defaultValue="Chet"
-                          placeholder="Company"
-                          type="text"
+                          type="Number"
+                           placeholder="Télèphone"
                           style={{ color: "#9a9a9a" }}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="6" style={{ padding: '10px 10px 0' }}>
-                      <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
-                        <label>Last Name</label>
-                        <Input
-                          defaultValue="Faker"
-                          placeholder="Last Name"
-                          type="text"
-                          style={{ color: "#9a9a9a" }}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12" style={{ padding: '10px 10px 0' }}>
-                      <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
-                        <label>Address</label>
-                        <Input
-                          defaultValue="Melbourne, Australia"
-                          placeholder="Home Address"
-                          type="text"
-                          style={{ color: "#9a9a9a" }}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="4" style={{ padding: '10px 10px 0' }}>
-                      <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
-                        <label>City</label>
-                        <Input
-                          defaultValue="Melbourne"
-                          placeholder="City"
-                          type="text"
-                          style={{ color: "#9a9a9a" }}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="px-1" md="4" style={{ padding: '10px 10px 0' }}>
-                      <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
-                        <label>Country</label>
-                        <Input
-                          defaultValue="Australia"
-                          placeholder="Country"
-                          type="text"
-                          style={{ color: "#9a9a9a" }}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="4" style={{ padding: '10px 10px 0' }}>
-                      <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
-                        <label>Postal Code</label>
-                        <Input placeholder="ZIP Code" type="number" style={{ color: "#9a9a9a" }} />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12" style={{ padding: '10px 10px 0' }}>
-                      <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
-                        <label>About Me</label>
-                        <Input
-                          type="textarea"
-                          defaultValue="Oh so, your weak rhyme You doubt I'll bother, reading into it"
-                          style={{ color: "#9a9a9a" }}
+                          name="telephone"
+                          onChange={handlechange}
                         />
                       </FormGroup>
                     </Col>
@@ -337,7 +272,7 @@ console.log(updatedUser,"up");
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Mot de passe</label>
                         <Input
-                        name="password"
+                          name="password"
                           placeholder="Password"
                           type="Password"
                           style={{ color: "#9a9a9a" }}
@@ -351,9 +286,11 @@ console.log(updatedUser,"up");
                       <FormGroup style={{ color: "#9a9a9a", fontWeight: 300, fontSize: "1rem" }}>
                         <label>Confirme mot de passe</label>
                         <Input
+                        name="password"
                           placeholder="Password"
                           type="Password"
                           style={{ color: "#9a9a9a" }}
+                          onChange={handlechange}
                         />
                       </FormGroup>
                     </Col>
@@ -364,9 +301,9 @@ console.log(updatedUser,"up");
                         <Button
                           className="btn-round"
                           color="primary"
-                        
+
                           style={{ backgroundColor: "#1F4B43", borderRadius: "25px", fontWeight: 600, height: "45px" }}
-                          onClick={()=>(updateProfil(updatedUser))}
+                          onClick={() => (updateProfil(updatedUser))}
                         >
                           Modifier Profil
                         </Button>
