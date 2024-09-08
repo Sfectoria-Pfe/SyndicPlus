@@ -5,7 +5,7 @@ import { createUser, deleteUser, getALLUsers, getUserById } from '../controllers
 const router = express.Router()
 
 router.get('/getusers', getALLUsers);
-router.get('/getuser/:id', getUserById);
+router.get('/oneuser/:id', getUserById);
 router.post('/getusers', createUser);
 router.delete('/deleteUser/:id', deleteUser);
 

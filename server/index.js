@@ -5,7 +5,7 @@ import userRoutes from './routes/userRoutes.js';
 import prestataireRoutes from './routes/prestataireRoutes.js';
 import incidencesRoutes from './routes/incidencesRouter.js';
 import locataireRoutes from './routes/locataireRoutes.js';
-import paiementRoutes from './routes/locataireRoutes.js';
+import paiementRoutes from './routes/paiementRoutes.js';
 import proprietaireRoutes from './routes/proprietaireRoutes.js';
 import syndicRoutes from './routes/syndicRoutes.js';
 import demandePrestatiareRoutes from './routes/demandePrestataireRouter.js';

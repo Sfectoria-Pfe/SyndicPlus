@@ -102,7 +102,7 @@ export default function Main() {
   React.useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:9000/users/getuser/${id}`);
+        const response = await axios.get(`http://localhost:9000/users/oneuser/${id}`);
         setUser(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des informations utilisateur:', error);
